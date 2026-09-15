@@ -179,7 +179,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
         </div>
 
         {/* Scanner Viewport — strictly bounded hero focal point */}
-        <div className="relative w-full h-[240px] xs:h-[260px] sm:h-[280px] lg:h-[310px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
+        <div className="relative w-full min-h-[310px] sm:min-h-[330px] lg:h-[350px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
 
           {/* Optical Scanner Laser & HUD Layer while loading */}
           {isLoading && (
@@ -328,24 +328,24 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`relative flex flex-col items-center justify-center p-8 sm:p-10 text-center transition-all duration-300 w-full h-full ${
+              className={`relative flex flex-col items-center justify-center py-5 px-4 sm:py-6 sm:px-6 text-center transition-all duration-300 w-full h-full ${
                 isDragging
                   ? 'bg-emerald-500/10 dark:bg-emerald-950/20 border-2 border-dashed border-emerald-500'
                   : 'bg-transparent border-2 border-dashed border-slate-300/70 dark:border-white/10 hover:border-emerald-500/50 dark:hover:border-emerald-500/50'
               }`}
             >
               {/* Camera icon — refined sleek focal point */}
-              <div className="relative mb-3.5">
-                <div className="w-[54px] h-[54px] rounded-2xl bg-white dark:bg-[#1A1C20] border border-slate-200/90 dark:border-white/10 flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)]">
-                  <Camera className="w-6 h-6 text-emerald-600 dark:text-emerald-400" strokeWidth={1.8} />
+              <div className="relative mb-2 sm:mb-2.5">
+                <div className="w-[46px] h-[46px] sm:w-[50px] sm:h-[50px] rounded-xl sm:rounded-2xl bg-white dark:bg-[#1A1C20] border border-slate-200/90 dark:border-white/10 flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)]">
+                  <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400" strokeWidth={1.8} />
                 </div>
                 {/* Live dot */}
-                <div className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-[#1A1C20] animate-ping" />
-                <div className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-[#1A1C20]" />
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#1A1C20] animate-ping" />
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-[#1A1C20]" />
               </div>
 
               {/* Display-scale headline — high-contrast focal text */}
-              <h3 className="text-xl xs:text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-white mb-2 sm:mb-2.5 tracking-tight leading-[1.2]">
+              <h3 className="text-xl xs:text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-white mb-1.5 sm:mb-2 tracking-tight leading-[1.2]">
                 {isDragging ? 'Drop your leaf photo here' : (
                   <>Take a photo of your{' '}
                     <span className="font-serif italic font-normal text-emerald-600 dark:text-emerald-400">sick leaf</span>
@@ -353,7 +353,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 )}
               </h3>
 
-              <p className="text-xs sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-[320px] mb-4 sm:mb-6 leading-relaxed">
+              <p className="text-xs sm:text-[14px] text-slate-600 dark:text-neutral-400 max-w-[320px] mb-3.5 sm:mb-4 leading-relaxed">
                 <span className="hidden sm:inline">Hold close to a spotted or yellow leaf, or drag an image here.</span>
                 <span className="sm:hidden">Hold close to a spotted or yellow leaf, or choose a photo.</span>
               </p>
@@ -363,7 +363,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 <button
                   type="button"
                   onClick={() => setSourceMode('webcam')}
-                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-[14px] shadow-sm hover:shadow-md hover:shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer min-h-[42px] sm:min-h-[auto]"
+                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-[13px] shadow-sm hover:shadow-md hover:shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer min-h-[40px] sm:min-h-[auto]"
                 >
                   <Camera className="w-4 h-4" />
                   <span>Use Camera</span>
@@ -372,7 +372,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white dark:bg-[#1A1B1E] hover:bg-slate-50 dark:hover:bg-[#222428] text-slate-950 dark:text-neutral-100 font-bold text-xs sm:text-[14px] border border-slate-300 dark:border-white/15 shadow-xs hover:shadow-sm transition-all active:scale-95 cursor-pointer min-h-[42px] sm:min-h-[auto]"
+                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-white dark:bg-[#1A1B1E] hover:bg-slate-50 dark:hover:bg-[#222428] text-slate-950 dark:text-neutral-100 font-bold text-xs sm:text-[13px] border border-slate-300 dark:border-white/15 shadow-xs hover:shadow-sm transition-all active:scale-95 cursor-pointer min-h-[40px] sm:min-h-[auto]"
                 >
                   <Upload className="w-4 h-4 text-slate-700 dark:text-neutral-300" />
                   <span>Choose Photo</span>
@@ -380,7 +380,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
               </div>
 
               {/* Format hint */}
-              <p className="mt-3.5 sm:mt-5 text-[10px] sm:text-[11px] text-slate-400 dark:text-neutral-500 font-mono tracking-wider uppercase font-semibold">
+              <p className="mt-2.5 sm:mt-3 text-[10px] sm:text-[11px] text-slate-400 dark:text-neutral-500 font-mono tracking-wider uppercase font-semibold">
                 PNG · JPG · WEBP · HEIC
               </p>
             </div>
