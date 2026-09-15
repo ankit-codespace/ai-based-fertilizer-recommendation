@@ -305,18 +305,18 @@ Return ONLY valid JSON matching this schema:
     crop = 'Mango (Mangifera indica)';
     disease = 'Mango Leaf Gall Midge (Procontarinia matteiana)';
     status = 'Pest Infestation';
-    symptoms = ['Raised black pimple-like blister galls', 'Insect oviposition punctures', 'Premature leaf drop risk'];
-    defs = ['Organic Neem Oil / Systemic Insecticide required'];
+    symptoms = ['Raised black bumpy blister spots', 'Tiny insect bite clusters', 'Leaves turning yellow and falling'];
+    defs = ['Natural Neem Oil Spray'];
     customBoxes = [
       { 
         label: 'Gall Midge Blisters', 
-        simpleMeaning: 'Black raised leaf warts', 
+        simpleMeaning: 'Dark raised bumpy spots', 
         confidence: 0.96, 
         area: { x: 48, y: 10, width: 38, height: 42 } 
       },
       { 
         label: 'Oviposition Punctures', 
-        simpleMeaning: 'Insect egg puncture clusters', 
+        simpleMeaning: 'Tiny bug bite holes', 
         confidence: 0.92, 
         area: { x: 42, y: 52, width: 34, height: 35 } 
       }
@@ -325,8 +325,8 @@ Return ONLY valid JSON matching this schema:
     crop = 'Tomato (Solanum lycopersicum)';
     disease = 'Early Blight (Alternaria solani)';
     status = 'Fungal / Disease';
-    symptoms = ['Concentric brown target rings', 'Chlorotic yellow halo on outer leaf margins', 'Older leaves curling'];
-    defs = ['Copper Fungicide', 'Potassium (K)'];
+    symptoms = ['Brown circular target rings', 'Yellow ring around leaf spots', 'Curled brown leaf edges'];
+    defs = ['Anti-Fungus Spray', 'Potassium (K) Food'];
     customBoxes = [
       { 
         label: 'Blight Target Rings', 
@@ -345,8 +345,8 @@ Return ONLY valid JSON matching this schema:
     crop = 'Hibiscus (Hibiscus rosa-sinensis)';
     disease = 'Interveinal Iron (Fe) Chlorosis';
     status = 'Nutrient Deficient';
-    symptoms = ['Lush green leaf veins', 'Yellow bleached interveinal tissue', 'Slow flower bud formation'];
-    defs = ['Chelated Iron (Fe)', 'Magnesium (Mg)'];
+    symptoms = ['Dark green veins on leaf', 'Yellow bleached spaces between veins', 'Slow flower bud growth'];
+    defs = ['Iron Food (Chelated Iron)', 'Magnesium Food'];
     customBoxes = [
       { 
         label: 'Interveinal Chlorosis', 
@@ -359,8 +359,8 @@ Return ONLY valid JSON matching this schema:
     crop = 'Potato (Solanum tuberosum)';
     disease = 'Late Blight (Phytophthora infestans)';
     status = 'Fungal / Disease';
-    symptoms = ['Dark water-soaked rotting lesions', 'High humidity fungal sporulation', 'Rapid canopy collapse'];
-    defs = ['Copper Fungicide & Drainage'];
+    symptoms = ['Dark rotting wet spots', 'Fuzzy white fungus on leaf edges', 'Leaves wilting quickly'];
+    defs = ['Anti-Fungus Spray & Stop Watering'];
     customBoxes = [
       { 
         label: 'Water-Soaked Lesions', 
@@ -379,8 +379,8 @@ Return ONLY valid JSON matching this schema:
     crop = 'Corn (Maize) (Zea mays)';
     disease = 'V-Shaped Nitrogen Starvation';
     status = 'Nutrient Deficient';
-    symptoms = ['V-shaped yellowing down central midrib', 'Pale yellow lower foliage', 'Stunted vigor'];
-    defs = ['Nitrogen (N)'];
+    symptoms = ['V-shaped yellow stripe down center vein', 'Pale yellow bottom leaves', 'Slow plant growth'];
+    defs = ['Nitrogen (N) Food'];
     customBoxes = [
       { 
         label: 'V-Shaped Chlorosis', 
@@ -679,17 +679,17 @@ Return ONLY a valid JSON object matching schema:
         type: 'Chemical',
         ratioNPK: 'Pest Control',
         exactDosage: '1 ml per 3 Liters of clean water',
-        applicationMethod: 'Foliar spray across upper and lower leaf surfaces to eliminate burrowed gall midge larvae',
+        applicationMethod: 'Spray both top and underside of leaves to protect from insect damage',
         timing: 'Late afternoon / Dusk (after 5:30 PM)',
         estimatedCostINR: 65,
         safetyWarning: 'Do not spray during peak flowering to protect pollinator bees. Wear gloves.'
       },
       {
-        name: 'Potassium Silicate Foliar Strengthener',
+        name: 'Leaf Toughness Spray (Potassium Silicate)',
         type: 'Foliar Spray',
         ratioNPK: '0-0-25 + Silica',
         exactDosage: '2 grams per Liter of water',
-        applicationMethod: 'Spray mist to thicken plant cell walls against insect egg puncture wounds',
+        applicationMethod: 'Spray on leaves to make them tough and protect against insect bites',
         timing: 'Morning (before 8:00 AM)',
         estimatedCostINR: 35
       }
@@ -698,31 +698,31 @@ Return ONLY a valid JSON object matching schema:
       {
         name: 'Cold-Pressed Pure Neem Oil (10,000 ppm)',
         type: 'Organic',
-        ratioNPK: 'Bio-Insecticide',
+        ratioNPK: 'Bio-Shield',
         exactDosage: '1 teaspoon (5ml) per Liter + 2 drops mild liquid soap',
-        applicationMethod: 'Spray thoroughly on all new flush leaves to repel midge flies and disrupt egg hatching',
+        applicationMethod: 'Spray thoroughly on all new leaves to stop baby bugs from eating leaves',
         timing: 'Evening (at dusk)',
         estimatedCostINR: 20
       },
       {
-        name: 'Organic Yellow Sticky Traps',
+        name: 'Yellow Sticky Bug Traps',
         type: 'Organic',
-        ratioNPK: 'Mechanical Barrier',
-        exactDosage: '4–6 sticky cards hung at canopy height',
-        applicationMethod: 'Hang in tree branches to catch adult gall midge flies before they lay eggs on leaves',
+        ratioNPK: '100% Organic Trap',
+        exactDosage: '4–6 sticky cards hung at branch height',
+        applicationMethod: 'Hang in tree branches to catch adult flies before they lay eggs on leaves',
         timing: 'All day monitoring',
         estimatedCostINR: 15
       }
     ];
-    summaryWhatHappened = `Tiny Gall Midge flies laid eggs inside the leaf tissue, causing the plant to grow dark wart-like blister bumps around the burrowed larvae.`;
-    summaryWhatToDoToday = `Prune and safely discard heavily blistered leaves. Spray organic neem oil (or systemic bio-spray) under leaves at dusk to eliminate larvae.`;
-    correlationText = `Soil moisture is at ${soil.moisturePercent}%. Active insect gall infestation detected; foliage requires pest defense while maintaining steady root hydration.`;
-    rootCauseText = `Infestation of Mango Leaf Gall Midge (Procontarinia matteiana) inducing necrotic blister galls on leaf blades.`;
+    summaryWhatHappened = `Tiny flies laid eggs inside the leaves, causing the plant to grow dark, bumpy blister spots.`;
+    summaryWhatToDoToday = `Snip off the leaves with the most bumps using clean scissors and throw them in the trash. Spray natural neem oil water under the leaves this evening.`;
+    correlationText = `Soil moisture is at ${soil.moisturePercent}%. The roots have water, but bugs are attacking the leaves, so the leaves need protective spray.`;
+    rootCauseText = `Infestation of Mango Leaf Gall Midge causing dark raised blister bumps on leaves.`;
     scheduleTasks = [
-      { day: 'Day 1', task: 'Prune and safely dispose of heavily blistered leaves', type: 'Organic' },
-      { day: 'Day 3', task: 'Spray neem oil (5ml/L) or systemic bio-spray at dusk', type: 'Chemical' },
-      { day: 'Day 7', task: 'Hang yellow sticky cards in canopy to catch emerging flies', type: 'Observation' },
-      { day: 'Day 14', task: 'Inspect fresh new flush leaves for smooth, blister-free growth', type: 'Observation' }
+      { day: 'Day 1', task: 'Snip off the sick bumpy leaves with clean scissors and throw them in the trash', type: 'Organic' },
+      { day: 'Day 3', task: 'Spray neem oil water under the leaves in the evening', type: 'Chemical' },
+      { day: 'Day 7', task: 'Hang yellow sticky cards in tree branches to catch flying bugs', type: 'Observation' },
+      { day: 'Day 14', task: 'Check new top leaves to make sure they are growing smooth with no bumps', type: 'Observation' }
     ];
   } else if (isBlight) {
     chemicalDosage = [
@@ -737,48 +737,48 @@ Return ONLY a valid JSON object matching schema:
         safetyWarning: 'Stop overhead watering; wear gloves while spraying.'
       },
       {
-        name: '19-19-19 Foliar Plant Food',
+        name: '19-19-19 Leaf Spray Food',
         type: 'Foliar Spray',
         ratioNPK: '19-19-19',
         exactDosage: '1 teaspoon (5g) per Liter of water',
-        applicationMethod: 'Spray light mist under leaves to aid recovery',
+        applicationMethod: 'Spray light mist under leaves to help the plant recover',
         timing: 'Evening (after 5:00 PM)',
         estimatedCostINR: 25
       }
     ];
     organicDosage = [
       {
-        name: 'Organic Neem Oil (Anti-Fungal Barrier)',
+        name: 'Organic Neem Oil (Anti-Fungus Shield)',
         type: 'Organic',
         ratioNPK: 'Bio-Shield',
         exactDosage: '1 teaspoon (5ml) per Liter of water',
-        applicationMethod: 'Mix with 2 drops soap and spray under leaves to prevent spore germination',
+        applicationMethod: 'Mix with 2 drops soap and spray under leaves to stop fungus from spreading',
         timing: 'Evening (at dusk)',
         estimatedCostINR: 15
       },
       {
-        name: 'Trichoderma Bio-Fungicide Soil Drench',
+        name: 'Natural Anti-Fungus Soil Treatment',
         type: 'Organic',
         ratioNPK: 'Bio-Fungus',
         exactDosage: '10g per Liter of water',
-        applicationMethod: 'Drench soil around base to suppress fungal pathogens',
+        applicationMethod: 'Pour around the dirt near the roots to fight fungus in the soil',
         timing: 'Morning',
         estimatedCostINR: 30
       }
     ];
     summaryWhatHappened = isWet
-      ? `Your soil is flooded (${soil.moisturePercent}%) with high humidity, creating the ideal breeding ground for fungal blight spots on leaf tissue.`
-      : `Fungal blight spores attacked leaf tissue, creating dark circular target rings and yellowing margins.`;
+      ? `Your dirt is soaked in water (${soil.moisturePercent}%) with moist air, making mold and fungus spread fast and create brown spots on the leaves.`
+      : `A plant fungus caused brown ring-shaped spots and yellow leaf edges.`;
     summaryWhatToDoToday = isWet
-      ? `Stop watering for 3 to 4 days. Prune decaying spotted leaves and apply anti-fungal copper spray.`
-      : `Prune spotted lower leaves and spray copper anti-fungal mist early in the morning.`;
-    correlationText = `Soil moisture is at ${soil.moisturePercent}% with ${soil.humidityPercent}% air humidity, creating elevated fungal pressure on foliage.`;
-    rootCauseText = `Fungal pathogen proliferation accelerated by foliar moisture and humid microclimate.`;
+      ? `Stop watering for 3 to 4 days so the dirt can dry out. Cut off the sick spotted leaves with clean scissors and throw them away, then spray anti-fungus spray on the plant.`
+      : `Cut off the sick bottom leaves with brown spots using clean scissors and spray anti-fungus spray on the leaves in the morning.`;
+    correlationText = `Soil moisture is at ${soil.moisturePercent}% with ${soil.humidityPercent}% air humidity. High moisture in the soil and air is letting fungus grow on wet leaves.`;
+    rootCauseText = `Fungal plant infection accelerated by wet leaves and humid air.`;
     scheduleTasks = [
-      { day: 'Day 1', task: 'Prune lowest infected leaves near soil', type: 'Organic' },
-      { day: 'Day 3', task: 'Apply copper anti-fungal foliar mist in early morning', type: 'Chemical' },
-      { day: 'Day 7', task: 'Check that spot expansion has stopped', type: 'Observation' },
-      { day: 'Day 14', task: 'Confirm healthy green new leaves emerging', type: 'Observation' }
+      { day: 'Day 1', task: 'Cut off the sick bottom leaves near the dirt with clean scissors and throw them away', type: 'Organic' },
+      { day: 'Day 3', task: 'Spray anti-fungus spray all over the leaves in the morning', type: 'Chemical' },
+      { day: 'Day 7', task: 'Check that the dark spots have stopped spreading', type: 'Observation' },
+      { day: 'Day 14', task: 'Check that fresh new green leaves are growing at the top', type: 'Observation' }
     ];
   } else if (isIronChlorosis) {
     chemicalDosage = [
@@ -787,40 +787,40 @@ Return ONLY a valid JSON object matching schema:
         type: 'Chemical',
         ratioNPK: 'Micronutrient (Fe)',
         exactDosage: '1 teaspoon (5g) per 5 Liters of water',
-        applicationMethod: 'Pour as soil drench around root zone for fast uptake',
+        applicationMethod: 'Mix into water and pour around the soil near roots for fast uptake',
         timing: 'Morning',
         estimatedCostINR: 45
       },
       {
-        name: 'Magnesium Sulfate (Epsom Salt)',
+        name: 'Magnesium Plant Salt (Epsom Salt)',
         type: 'Foliar Spray',
         ratioNPK: 'Mg + Sulfur',
         exactDosage: '1/2 teaspoon (2g) per Liter of water',
-        applicationMethod: 'Spray directly on yellow leaves to jumpstart chlorophyll production',
+        applicationMethod: 'Spray directly on yellow leaves to help them turn green again',
         timing: 'Early morning',
         estimatedCostINR: 20
       }
     ];
     organicDosage = [
       {
-        name: 'Enriched Vermicompost & Humic Acid',
+        name: 'Enriched Vermicompost & Soil Food',
         type: 'Organic',
         ratioNPK: 'Bio-Organic',
         exactDosage: '2 cups (250g) per plant',
-        applicationMethod: 'Mix into top 2 inches of soil around base to balance soil pH',
+        applicationMethod: 'Mix into top 2 inches of dirt around the base to balance soil food',
         timing: 'Evening hours',
         estimatedCostINR: 25
       }
     ];
-    summaryWhatHappened = `The plant lacks iron micronutrients, causing the leaf blade to bleach yellow while major veins remain dark green.`;
-    summaryWhatToDoToday = `Dissolve 1 spoon of Chelated Iron in water and pour at the roots. Spray diluted iron mist on leaves tomorrow morning.`;
-    correlationText = `Soil moisture is at ${soil.moisturePercent}%. Micronutrient uptake lockout detected, causing interveinal chlorophyll loss.`;
-    rootCauseText = `Iron (Fe) deficiency in leaf tissue due to high soil pH or micronutrient depletion.`;
+    summaryWhatHappened = `The plant does not have enough iron food, so the leaf is turning yellow while the veins stay dark green.`;
+    summaryWhatToDoToday = `Mix 1 spoon of iron powder in water and pour it onto the soil around the roots today. Spray a light iron mist on leaves tomorrow morning.`;
+    correlationText = `Soil moisture is at ${soil.moisturePercent}%. Plant roots cannot absorb iron from the dirt, causing yellow spaces between veins.`;
+    rootCauseText = `Iron (Fe) nutrient deficiency in leaf tissue due to high soil pH or depleted minerals.`;
     scheduleTasks = [
-      { day: 'Day 1', task: 'Apply Chelated Iron drench around root zone', type: 'Chemical' },
-      { day: 'Day 4', task: 'Light foliar spray of diluted iron on leaves', type: 'Chemical' },
-      { day: 'Day 8', task: 'Observe green chlorophyll returning between veins', type: 'Observation' },
-      { day: 'Day 14', task: 'Confirm deep green uniform foliage and healthy bud formation', type: 'Observation' }
+      { day: 'Day 1', task: 'Mix iron powder in water and pour around the soil near roots', type: 'Chemical' },
+      { day: 'Day 4', task: 'Spray diluted iron water lightly onto the yellow leaves', type: 'Chemical' },
+      { day: 'Day 8', task: 'Check to see green color returning to the yellow leaf areas', type: 'Observation' },
+      { day: 'Day 14', task: 'Make sure all top leaves are healthy green with fresh flower buds', type: 'Observation' }
     ];
   } else {
     chemicalDosage = isDry
@@ -840,7 +840,7 @@ Return ONLY a valid JSON object matching schema:
             type: 'Foliar Spray',
             ratioNPK: '19-19-19',
             exactDosage: '1 teaspoon (5g) per Liter of water',
-            applicationMethod: 'Spray mist under leaves using a spray bottle',
+            applicationMethod: 'Spray light mist under leaves using a spray bottle',
             timing: 'Evening (after 5:00 PM)',
             estimatedCostINR: 25
           }
@@ -864,7 +864,7 @@ Return ONLY a valid JSON object matching schema:
             type: 'Chemical',
             ratioNPK: '10-26-26',
             exactDosage: '3 tablespoons (60g) per plant',
-            applicationMethod: 'Mix into top dirt 6 inches away from base',
+            applicationMethod: 'Mix into top dirt 6 inches away from the base',
             timing: 'Morning',
             estimatedCostINR: 45
           }
@@ -892,28 +892,28 @@ Return ONLY a valid JSON object matching schema:
     ];
 
     summaryWhatHappened = isDry
-      ? `Your soil is dry (${soil.moisturePercent}%). Because the roots are starved of water, the plant cannot drink Potassium food, causing leaf edges to turn brown and crispy.`
+      ? `Your dirt is too dry (${soil.moisturePercent}%). Because the roots have no water to drink, the plant cannot take up food, making leaf tips turn brown and crispy.`
       : isWet
-      ? `Your soil is flooded (${soil.moisturePercent}%). The roots are drowning in water, which blocks air and breeds fungal leaf spots.`
-      : `Your soil moisture is good (${soil.moisturePercent}%). The plant has a simple nutrient shortage that needs gentle feeding.`;
+      ? `Your dirt is soaking wet (${soil.moisturePercent}%). The roots cannot breathe under water, which makes fungus grow and spots appear on leaves.`
+      : `Your soil moisture is good (${soil.moisturePercent}%). The plant is hungry and needs balanced fertilizer food.`;
 
     summaryWhatToDoToday = isDry
-      ? `Give 1 to 2 buckets of water today. Thirsty roots cannot absorb fertilizer. Feed plant food tomorrow evening.`
+      ? `Give 1 to 2 buckets of water today. Dry roots cannot eat food until they drink. Add plant fertilizer tomorrow evening.`
       : isWet
-      ? `Stop watering for 3 to 4 days. Let the topsoil dry out so roots can breathe.`
-      : `Sprinkle 2 spoons of fertilizer around the base today (keep 4 inches away from main stem).`;
+      ? `Do not water for 3 to 4 days. Let the top dirt dry so the roots can breathe.`
+      : `Sprinkle 2 spoons of fertilizer around the dirt today (keep 4 inches away from the stem).`;
 
     correlationText = isDry
-      ? `Soil moisture is low at ${soil.moisturePercent}%, creating dry root stress that blocks Potassium absorption and burns leaf tips.`
+      ? `Soil moisture is low at ${soil.moisturePercent}%, creating dry root stress that stops the plant from drinking food and burns leaf tips.`
       : isWet
-      ? `Soil is waterlogged at ${soil.moisturePercent}% with ${soil.humidityPercent}% air humidity, choking root hairs and spreading leaf fungus.`
-      : `Soil moisture is healthy at ${soil.moisturePercent}%. Visual symptoms represent targeted nutrient starvation requiring balanced replenishment.`;
+      ? `Soil is soaking wet at ${soil.moisturePercent}% with ${soil.humidityPercent}% air humidity, choking root hairs and spreading leaf fungus.`
+      : `Soil moisture is healthy at ${soil.moisturePercent}%. Visual symptoms show that the plant needs gentle fertilizer feeding.`;
 
     rootCauseText = isDry
-      ? `Moisture deficit induced nutrient lockout preventing potassium transport to upper foliage.`
+      ? `Moisture shortage stopped the plant from moving potassium food up to the leaves.`
       : isWet
-      ? `Over-saturation inducing anaerobic root stress and secondary foliar infection.`
-      : `Nutrient depletion in root zone requiring split-dose mineral feeding.`;
+      ? `Over-watering stopped roots from breathing and encouraged leaf fungus.`
+      : `Nutrient shortage in soil requiring split-dose mineral feeding.`;
   }
 
   return {

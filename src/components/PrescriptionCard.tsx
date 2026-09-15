@@ -542,9 +542,6 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
                 Immediate diagnosis & action plan
               </span>
             </div>
-            <span className="text-xs font-medium text-slate-500 dark:text-neutral-400">
-              Read time: ~10 sec
-            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -734,7 +731,7 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
                         {item.name}
                       </span>
                       <span className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-lg border border-emerald-200/70 dark:border-emerald-800/40">
-                        ₹{item.estimatedCostINR}
+                        {item.ratioNPK || 'Natural / Organic'}
                       </span>
                     </div>
 

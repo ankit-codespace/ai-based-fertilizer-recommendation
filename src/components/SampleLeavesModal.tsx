@@ -12,9 +12,9 @@ interface SampleLeavesModalProps {
 export const SAMPLE_LEAVES: SampleLeaf[] = [
   {
     id: 'local-tomato-blight',
-    title: 'Tomato — Early Blight & Nutrient Stress',
+    title: 'Tomato — Early Blight & Thirsty Dirt',
     crop: 'Tomato (Solanum lycopersicum)',
-    disease: 'Concentric Ring Lesions & Marginal Scorching',
+    disease: 'Brown Ring Spots & Yellow Curled Edges',
     imageUrl: SAMPLE_IMAGES.tomato,
     defaultTelemetry: {
       moisturePercent: 26.5,
@@ -22,13 +22,13 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 62.0,
       timestamp: 'Field Sample'
     },
-    description: 'Target-like brown necrotic spots and curling yellow edges. Dry soil (26.5%) accelerates potassium starvation.'
+    description: 'Target-like brown spots with yellow curled edges. Dry dirt (26.5%) stops the plant from drinking plant food.'
   },
   {
     id: 'local-mango-scorch',
-    title: 'Mango — Leaf Gall Midge Blisters',
+    title: 'Mango — Leaf Bug Blisters',
     crop: 'Mango (Mangifera indica)',
-    disease: 'Wart-Like Gall Midge Blisters (Procontarinia)',
+    disease: 'Dark Bumpy Leaf Blisters',
     imageUrl: SAMPLE_IMAGES.mango,
     defaultTelemetry: {
       moisturePercent: 32.0,
@@ -36,13 +36,13 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 56.0,
       timestamp: 'Field Sample'
     },
-    description: 'Black pimple-like blister galls formed by tiny gall midge flies laying eggs. Requires systemic neem or bio-insecticide to stop larval feeding.'
+    description: 'Dark bumpy spots formed by tiny flies laying eggs inside the leaf. Spray natural neem oil to stop baby bugs from eating the leaf.'
   },
   {
     id: 'local-hibiscus-chlorosis',
-    title: 'Hibiscus — Iron (Fe) & Nitrogen Chlorosis',
+    title: 'Hibiscus — Iron Food Shortage',
     crop: 'Hibiscus (Hibiscus rosa-sinensis)',
-    disease: 'Interveinal Yellowing (Green Veins)',
+    disease: 'Yellow Leaf with Dark Green Veins',
     imageUrl: SAMPLE_IMAGES.hibiscus,
     defaultTelemetry: {
       moisturePercent: 42.0,
@@ -50,13 +50,13 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 66.0,
       timestamp: 'Field Sample'
     },
-    description: 'Classic yellowing between leaf veins while major veins remain distinctly green, indicating micronutrient deficiency.'
+    description: 'Yellow leaf where veins stay dark green. This means the plant is starving for iron food.'
   },
   {
     id: 'local-corn-nitrogen',
-    title: 'Corn (Maize) — Nitrogen (N) Starvation',
+    title: 'Corn (Maize) — Nitrogen Food Shortage',
     crop: 'Maize (Zea mays)',
-    disease: 'V-Shaped Midrib Chlorosis',
+    disease: 'V-Shaped Yellow Stripe Down Center',
     imageUrl: SAMPLE_IMAGES.corn,
     defaultTelemetry: {
       moisturePercent: 24.0,
@@ -64,13 +64,13 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 55.0,
       timestamp: 'Field Sample'
     },
-    description: 'Classic V-shaped yellowing starting at leaf tip progressing down central midvein on older lower leaves.'
+    description: 'V-shaped yellow mark from the leaf tip down the center vein because the plant needs nitrogen food.'
   },
   {
     id: 'local-potato-blight',
-    title: 'Potato — Late Blight (Fungal Pathogen)',
+    title: 'Potato — Late Blight & Soaked Dirt',
     crop: 'Potato (Solanum tuberosum)',
-    disease: 'Phytophthora Infestans & Waterlogged Roots',
+    disease: 'Dark Rotting Spots from Overwatering',
     imageUrl: SAMPLE_IMAGES.potato,
     defaultTelemetry: {
       moisturePercent: 82.0,
@@ -78,11 +78,11 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 88.0,
       timestamp: 'Field Sample'
     },
-    description: 'Dark water-soaked necrotic lesions. Soil is waterlogged (82%) with 88% humidity, confirming extreme fungal hazard.'
+    description: 'Dark rotting wet spots. The dirt is soaked in water (82%), creating mold and fungus that damage leaves.'
   },
   {
     id: 'healthy-control',
-    title: 'Healthy Plant — Optimal Benchmark Control',
+    title: 'Healthy Plant — Benchmark Control',
     crop: 'Capsicum / Pepper',
     disease: 'No Disease Detected (Healthy Vigor)',
     imageUrl: 'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?auto=format&fit=crop&w=800&q=80',
@@ -92,7 +92,7 @@ export const SAMPLE_LEAVES: SampleLeaf[] = [
       humidityPercent: 62.0,
       timestamp: 'Sample Data'
     },
-    description: 'Lush dark green uniform chlorophyll distribution, turgid leaf veins, and ideal 52% soil hydration.'
+    description: 'Healthy, strong dark green leaf with perfect 52% soil moisture.'
   }
 ];
 
