@@ -179,7 +179,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
         </div>
 
         {/* Scanner Viewport — strictly bounded hero focal point */}
-        <div className="relative w-full h-[260px] sm:h-[280px] lg:h-[310px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
+        <div className="relative w-full h-[240px] xs:h-[260px] sm:h-[280px] lg:h-[310px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
 
           {/* Optical Scanner Laser & HUD Layer while loading */}
           {isLoading && (
@@ -345,7 +345,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
               </div>
 
               {/* Display-scale headline — high-contrast focal text */}
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-white mb-2.5 tracking-tight leading-[1.2]">
+              <h3 className="text-xl xs:text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-white mb-2 sm:mb-2.5 tracking-tight leading-[1.2]">
                 {isDragging ? 'Drop your leaf photo here' : (
                   <>Take a photo of your{' '}
                     <span className="font-serif italic font-normal text-emerald-600 dark:text-emerald-400">sick leaf</span>
@@ -353,16 +353,17 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 )}
               </h3>
 
-              <p className="text-sm sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-[320px] mb-6 leading-relaxed">
-                Hold close to a spotted or yellow leaf, or drag an image here.
+              <p className="text-xs sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-[320px] mb-4 sm:mb-6 leading-relaxed">
+                <span className="hidden sm:inline">Hold close to a spotted or yellow leaf, or drag an image here.</span>
+                <span className="sm:hidden">Hold close to a spotted or yellow leaf, or choose a photo.</span>
               </p>
 
               {/* Primary + secondary CTA pair */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col xs:flex-row items-center gap-2 sm:gap-3 w-full max-w-[290px] xs:max-w-none justify-center">
                 <button
                   type="button"
                   onClick={() => setSourceMode('webcam')}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[14px] shadow-sm hover:shadow-md hover:shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer"
+                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-[14px] shadow-sm hover:shadow-md hover:shadow-emerald-600/25 transition-all active:scale-95 cursor-pointer min-h-[42px] sm:min-h-[auto]"
                 >
                   <Camera className="w-4 h-4" />
                   <span>Use Camera</span>
@@ -371,7 +372,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-[#1A1B1E] hover:bg-slate-50 dark:hover:bg-[#222428] text-slate-950 dark:text-neutral-100 font-bold text-[14px] border border-slate-300 dark:border-white/15 shadow-xs hover:shadow-sm transition-all active:scale-95 cursor-pointer"
+                  className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white dark:bg-[#1A1B1E] hover:bg-slate-50 dark:hover:bg-[#222428] text-slate-950 dark:text-neutral-100 font-bold text-xs sm:text-[14px] border border-slate-300 dark:border-white/15 shadow-xs hover:shadow-sm transition-all active:scale-95 cursor-pointer min-h-[42px] sm:min-h-[auto]"
                 >
                   <Upload className="w-4 h-4 text-slate-700 dark:text-neutral-300" />
                   <span>Choose Photo</span>
@@ -379,7 +380,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
               </div>
 
               {/* Format hint */}
-              <p className="mt-5 text-[11px] text-slate-400 dark:text-neutral-500 font-mono tracking-wider uppercase font-semibold">
+              <p className="mt-3.5 sm:mt-5 text-[10px] sm:text-[11px] text-slate-400 dark:text-neutral-500 font-mono tracking-wider uppercase font-semibold">
                 PNG · JPG · WEBP · HEIC
               </p>
             </div>
@@ -395,10 +396,10 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
         </div>
 
         {/* Bottom bar — quick samples + vision result */}
-        <div className="px-5 py-3.5 flex items-center justify-between gap-3 border-t border-slate-100 dark:border-white/[0.05]">
+        <div className="px-3 sm:px-5 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-3 border-t border-slate-100 dark:border-white/[0.05]">
           
           {/* Quick sample crop tags */}
-          <div className="flex items-center gap-1.5 overflow-x-auto min-w-0 flex-1 scrollbar-none py-0.5">
+          <div className="flex items-center gap-1.5 overflow-x-auto min-w-0 flex-1 scrollbar-none py-0.5" style={{ WebkitOverflowScrolling: 'touch' }}>
             <span className="text-xs text-slate-400 dark:text-neutral-500 whitespace-nowrap font-medium flex-shrink-0">Try:</span>
             {SAMPLE_LEAVES.slice(0, 5).map((sample) => (
               <button
@@ -409,7 +410,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                   if (onSelectSample) onSelectSample(sample);
                   else onImageChange(sample.imageUrl);
                 }}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-[#1A1B1E] hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-700 dark:hover:text-emerald-300 text-slate-700 dark:text-neutral-300 border border-slate-200/70 dark:border-white/[0.07] transition-all whitespace-nowrap active:scale-95 cursor-pointer flex-shrink-0"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-slate-100 dark:bg-[#1A1B1E] hover:bg-emerald-50 dark:hover:bg-emerald-950/30 hover:text-emerald-700 dark:hover:text-emerald-300 text-slate-700 dark:text-neutral-300 border border-slate-200/70 dark:border-white/[0.07] transition-all whitespace-nowrap active:scale-95 cursor-pointer flex-shrink-0"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 {sample.crop.split(' ')[0]}

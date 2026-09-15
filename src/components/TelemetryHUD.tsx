@@ -97,24 +97,24 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
       <div className="bg-white dark:bg-[#141518] rounded-[22px] p-4 sm:p-5 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] transition-all">
         
         {/* Header: Droplet + Title + Status + Sensor Link */}
-        <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="flex items-center gap-2.5">
+        <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2 flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950/50 border border-sky-200/60 dark:border-sky-800/40 flex items-center justify-center flex-shrink-0">
               <Droplet className="w-4 h-4 text-sky-600 dark:text-sky-400" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-[13px] font-bold text-slate-900 dark:text-neutral-100 tracking-tight leading-none">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h3 className="text-[13px] font-bold text-slate-900 dark:text-neutral-100 tracking-tight leading-none whitespace-nowrap">
                   Soil Moisture
                 </h3>
-                <span className={`inline-flex items-center gap-1 text-[11px] font-semibold ${
+                <span className={`inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold ${
                   moisture < 30 ? 'text-amber-600 dark:text-amber-400' : moisture > 70 ? 'text-sky-600 dark:text-sky-400' : 'text-emerald-600 dark:text-emerald-400'
                 }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${moisture < 30 ? 'bg-amber-500' : moisture > 70 ? 'bg-sky-500' : 'bg-emerald-500'}`} />
                   {statusLabel}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5">
+              <p className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5 truncate">
                 {isProbeConnected ? `Streaming from ${esp32Ip}` : 'Live or simulated soil probe sensor'}
               </p>
             </div>
@@ -160,8 +160,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
         )}
 
         {/* Progress Ring Gauge (Optimized Golden Viewport - Spacious Apple-grade ring) */}
-        <div className="relative flex flex-col items-center justify-center my-2">
-          <svg className="w-48 h-48 sm:w-52 sm:h-52" viewBox="0 0 200 200">
+        <div className="relative flex flex-col items-center justify-center my-1 sm:my-2">
+          <svg className="w-40 h-40 xs:w-44 xs:h-44 sm:w-52 sm:h-52" viewBox="0 0 200 200">
             <defs>
               <linearGradient id="moistureGradAmber" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#F59E0B" />
@@ -209,28 +209,28 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           {/* Center Value — perfectly centered with ample clearance */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
             <div className="flex items-baseline">
-              <span className="text-[36px] sm:text-[40px] font-extrabold font-sans text-slate-900 dark:text-neutral-50 tracking-tight tabular-nums leading-none">
+              <span className="text-[30px] xs:text-[34px] sm:text-[40px] font-extrabold font-sans text-slate-900 dark:text-neutral-50 tracking-tight tabular-nums leading-none">
                 {animatedMoisture.toFixed(1)}
               </span>
-              <span className="text-[17px] font-bold text-slate-400 dark:text-neutral-500 ml-0.5 leading-none">
+              <span className="text-[15px] sm:text-[17px] font-bold text-slate-400 dark:text-neutral-500 ml-0.5 leading-none">
                 %
               </span>
             </div>
             
             {/* Precision Status Micro-Badge */}
-            <div className="mt-2.5">
+            <div className="mt-1.5 sm:mt-2.5">
               {moisture < 30 ? (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-[10.5px] font-semibold tracking-wide">
+                <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-amber-500/10 dark:bg-amber-400/10 border border-amber-500/20 dark:border-amber-400/20 text-amber-700 dark:text-amber-300 text-[10px] sm:text-[10.5px] font-semibold tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse flex-shrink-0" />
                   Dry · Needs Water
                 </span>
               ) : moisture > 70 ? (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-500/10 dark:bg-sky-400/10 border border-sky-500/20 dark:border-sky-400/20 text-sky-700 dark:text-sky-300 text-[10.5px] font-semibold tracking-wide">
+                <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-sky-500/10 dark:bg-sky-400/10 border border-sky-500/20 dark:border-sky-400/20 text-sky-700 dark:text-sky-300 text-[10px] sm:text-[10.5px] font-semibold tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse flex-shrink-0" />
                   Too Wet · Restrict
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 dark:border-emerald-400/20 text-emerald-700 dark:text-emerald-300 text-[10.5px] font-semibold tracking-wide">
+                <span className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-400/10 border border-emerald-500/20 dark:border-emerald-400/20 text-emerald-700 dark:text-emerald-300 text-[10px] sm:text-[10.5px] font-semibold tracking-wide">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
                   Optimal Level
                 </span>
@@ -244,7 +244,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           <button
             type="button"
             onClick={() => onUpdateMoisture(18)}
-            className={`flex-1 py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all text-center ${
+            className={`flex-1 py-1.5 sm:py-1 px-1.5 rounded-lg text-xs font-semibold transition-all text-center min-h-[38px] sm:min-h-[auto] flex items-center justify-center ${
               moisture <= 25 
                 ? 'bg-amber-100/80 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 shadow-xs' 
                 : 'text-slate-500 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-200'
@@ -255,7 +255,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           <button
             type="button"
             onClick={() => onUpdateMoisture(48)}
-            className={`flex-1 py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all text-center ${
+            className={`flex-1 py-1.5 sm:py-1 px-1.5 rounded-lg text-xs font-semibold transition-all text-center min-h-[38px] sm:min-h-[auto] flex items-center justify-center ${
               moisture > 25 && moisture < 65 
                 ? 'bg-emerald-100/80 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 shadow-xs' 
                 : 'text-slate-500 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-200'
@@ -266,7 +266,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           <button
             type="button"
             onClick={() => onUpdateMoisture(82)}
-            className={`flex-1 py-1 px-1.5 rounded-lg text-[11px] font-semibold transition-all text-center ${
+            className={`flex-1 py-1.5 sm:py-1 px-1.5 rounded-lg text-xs font-semibold transition-all text-center min-h-[38px] sm:min-h-[auto] flex items-center justify-center ${
               moisture >= 65 
                 ? 'bg-sky-100/80 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 shadow-xs' 
                 : 'text-slate-500 hover:text-slate-900 dark:text-neutral-400 dark:hover:text-neutral-200'

@@ -358,14 +358,14 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
   // 4. EMPTY STANDBY — awaiting leaf photo
   if (!prescription || !visionResult) {
     return (
-      <div className="bg-white dark:bg-[#141518] rounded-[24px] p-7 sm:p-9 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between min-h-[360px] font-sans">
+      <div className="bg-white dark:bg-[#141518] rounded-[20px] sm:rounded-[24px] p-4 sm:p-9 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col justify-between min-h-[360px] font-sans">
         
         {/* Header */}
         <div>
           <div className="flex items-center justify-between gap-2 mb-3">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-              <span className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-neutral-500">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-neutral-500">
                 Awaiting Inputs to Synthesize
               </span>
             </div>
@@ -375,19 +375,19 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
             </div>
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-neutral-100 mb-2 tracking-tight leading-snug">
+          <h3 className="text-xl xs:text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-neutral-100 mb-2 tracking-tight leading-snug">
             Your Custom <span className="font-serif italic font-normal text-emerald-600 dark:text-emerald-400">Plant Care Plan</span>
           </h3>
-          <p className="text-sm sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
             AgroPulse fuses your leaf photo with live soil moisture telemetry to formulate the exact watering directive, NPK fertilizer dosage, and recovery schedule.
           </p>
         </div>
 
         {/* Readiness checklist — 3 columns on desktop */}
-        <div className="my-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="my-4 sm:my-6 grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4">
           
           {/* Row 1: Leaf Photo */}
-          <div className={`flex items-center justify-between p-4 sm:p-5 rounded-[18px] border transition-all ${
+          <div className={`flex items-center justify-between p-3.5 sm:p-5 rounded-[16px] sm:rounded-[18px] border transition-all ${
             currentImage
               ? 'bg-slate-50/80 dark:bg-[#0E0F11] border-emerald-200/80 dark:border-emerald-900/40'
               : 'bg-slate-50/50 dark:bg-[#0E0F11]/60 border-slate-200/60 dark:border-white/[0.05]'
@@ -488,34 +488,34 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
   // 5. THE HERO PRESCRIPTION CARD (Full-Width Master Blueprint)
   return (
     <div className="flex flex-col gap-5" id="prescription-master-card">
-      <div className="bg-white dark:bg-[#141518] rounded-[24px] p-6 sm:p-9 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col gap-6 font-sans animate-fade-in">
+      <div className="bg-white dark:bg-[#141518] rounded-[20px] sm:rounded-[24px] p-4 sm:p-9 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col gap-5 sm:gap-6 font-sans animate-fade-in">
         
         {/* Hero Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-white/[0.06]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-5 border-b border-slate-100 dark:border-white/[0.06]">
           <div>
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="text-xs font-bold tracking-wider px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/40 flex items-center gap-1.5 shadow-xs">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="text-[11px] sm:text-xs font-bold tracking-wider px-2.5 sm:px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/40 flex items-center gap-1.5 shadow-xs">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 Agronomic Recovery Blueprint
               </span>
-              <span className="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1 rounded-lg border border-emerald-200/60 dark:border-emerald-800/40">
+              <span className="text-[11px] sm:text-xs font-mono font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded-lg border border-emerald-200/60 dark:border-emerald-800/40">
                 {(visionResult.confidenceScore * 100).toFixed(0)}% Confidence
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-neutral-100 tracking-tight leading-snug">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-neutral-100 tracking-tight leading-snug">
               {prescription.primaryDiagnosis}
             </h2>
-            <p className="text-sm text-slate-500 dark:text-neutral-400 mt-1 font-medium font-sans">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-neutral-400 mt-1 font-medium font-sans">
               Diagnosed Crop: <strong className="text-slate-950 dark:text-white font-bold">{visionResult.cropIdentified}</strong> • Severity: <span className="text-amber-600 dark:text-amber-400 font-bold">{visionResult.severityLevel}</span>
             </p>
           </div>
 
           {/* Header Action Shortcuts */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-stretch sm:self-auto justify-end pt-1 sm:pt-0">
             <button
               onClick={() => generatePrescriptionPDF(prescription, visionResult, prescription.snapshotTelemetry || soilTelemetry, farmProfile)}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer active:scale-95"
+              className="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-95"
             >
               <FileText className="w-4 h-4" />
               <span>Export PDF</span>
@@ -772,32 +772,34 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
         </div>
 
         {/* Action Toolbar */}
-        <div className="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-white/[0.07] flex-wrap">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 dark:border-white/[0.07]">
           <button
             onClick={() => generatePrescriptionPDF(prescription, visionResult, prescription.snapshotTelemetry || soilTelemetry, farmProfile)}
-            className="flex-1 min-w-[200px] flex items-center justify-center gap-2 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold transition-all shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer group"
+            className="w-full sm:flex-1 flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold transition-all shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer group"
           >
             <FileText className="w-4 h-4" />
             <span>DOWNLOAD COMPLETE PDF PLAN</span>
             <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
 
-          <button
-            onClick={handleWhatsAppShare}
-            className="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1B1E] dark:hover:bg-[#222428] border border-slate-200 dark:border-white/[0.08] text-slate-800 dark:text-neutral-200 font-semibold text-sm transition-all shadow-xs flex items-center gap-2 cursor-pointer"
-            title="Share via WhatsApp"
-          >
-            <Share2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Share via WhatsApp</span>
-          </button>
+          <div className="flex items-center gap-2.5 w-full sm:w-auto">
+            <button
+              onClick={handleWhatsAppShare}
+              className="flex-1 sm:flex-initial px-4 sm:px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1B1E] dark:hover:bg-[#222428] border border-slate-200 dark:border-white/[0.08] text-slate-800 dark:text-neutral-200 font-semibold text-xs sm:text-sm transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+              title="Share via WhatsApp"
+            >
+              <Share2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Share via WhatsApp</span>
+            </button>
 
-          <button
-            onClick={handleCopy}
-            className="p-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1B1E] dark:hover:bg-[#222428] border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-neutral-200 transition-all shadow-xs cursor-pointer"
-            title="Copy Text"
-          >
-            {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-500 dark:text-neutral-400" />}
-          </button>
+            <button
+              onClick={handleCopy}
+              className="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1B1E] dark:hover:bg-[#222428] border border-slate-200 dark:border-white/[0.08] text-slate-700 dark:text-neutral-200 transition-all shadow-xs cursor-pointer flex items-center justify-center"
+              title="Copy Text"
+            >
+              {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4 text-slate-500 dark:text-neutral-400" />}
+            </button>
+          </div>
         </div>
 
       </div>

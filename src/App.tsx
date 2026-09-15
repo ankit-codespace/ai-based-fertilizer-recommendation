@@ -326,7 +326,7 @@ export function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans bg-luminous-stage text-slate-900 dark:text-neutral-100 ${leafTransition.isActive ? '' : 'transition-colors duration-300'} selection:bg-emerald-500/30 blueprint-grid relative`}>
+    <div className={`min-h-screen flex flex-col font-sans bg-luminous-stage text-slate-900 dark:text-neutral-100 ${leafTransition.isActive ? '' : 'transition-colors duration-300'} selection:bg-emerald-500/30 blueprint-grid relative w-full max-w-full overflow-x-hidden`}>
       
       {/* 1. Full-Bleed Sticky Command Header */}
       <Header
@@ -339,7 +339,7 @@ export function App() {
       />
 
       {/* 2. Expansive Studio Canvas (Edge-to-Edge with Max Width Container) */}
-      <main className="max-w-[1520px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex-1 flex flex-col gap-5 sm:gap-6">
+      <main className="max-w-[1520px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-5 pb-24 lg:pb-6 flex-1 flex flex-col gap-4 sm:gap-6">
         
         {/* ==================================================================== */}
         {/* TIER 1: DUAL-INPUT HERO WORKBENCH (50/50 Desktop Grid)               */}
@@ -431,43 +431,43 @@ export function App() {
         {/* ==================================================================== */}
         {/* TIER 2: UNIFIED MULTIMODAL COMMAND BRIDGE (Natural Document Flow)     */}
         {/* ==================================================================== */}
-        <div className="relative bg-white dark:bg-[#141518] rounded-[22px] p-4 sm:p-5 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)] flex flex-col md:flex-row items-center justify-between gap-4 overflow-hidden transition-all">
+        <div className="relative bg-white dark:bg-[#141518] rounded-[20px] sm:rounded-[22px] p-3.5 sm:p-5 border border-slate-200/90 dark:border-white/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)] flex flex-col lg:flex-row items-center justify-between gap-3.5 sm:gap-4 overflow-hidden transition-all">
           
           {/* Synchronized Live Telemetry Evidence Group */}
-          <div className="flex items-center gap-3 sm:gap-4 flex-wrap w-full md:w-auto">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
             
             {/* Visual Sensor */}
-            <div className={`flex items-center gap-2.5 px-4 py-2 rounded-xl border transition-all ${
+            <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl border transition-all ${
               currentImage 
                 ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-200 shadow-xs'
                 : 'bg-slate-50 dark:bg-[#1B1D22] border-slate-200 dark:border-white/10 text-slate-500 dark:text-neutral-400'
             }`}>
-              <span className={`w-2 h-2 rounded-full ${currentImage ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300 dark:bg-neutral-600'}`} />
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-bold tracking-wider font-mono opacity-70">Visual Sensor</span>
-                <span className="text-xs font-bold font-sans">
-                  {currentImage ? `${farmProfile.cropName.split(' ')[0]} (Leaf Ready ✓)` : 'No Leaf Photo Yet'}
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${currentImage ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300 dark:bg-neutral-600'}`} />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono opacity-70 truncate">Visual Sensor</span>
+                <span className="text-xs font-bold font-sans truncate">
+                  {currentImage ? `${farmProfile.cropName.split(' ')[0]} (Ready ✓)` : 'No Leaf Photo'}
                 </span>
               </div>
             </div>
 
             {/* Soil Probe Sensor */}
-            <div className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
-              <span className={`w-2 h-2 rounded-full ${telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400">Soil Probe</span>
-                <span className="text-xs font-bold font-sans">
-                  {telemetry.moisturePercent}% Moisture ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Optimal'})
+            <div className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">Soil Probe</span>
+                <span className="text-xs font-bold font-sans truncate">
+                  {telemetry.moisturePercent}% ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Optimal'})
                 </span>
               </div>
             </div>
 
             {/* Microclimate */}
-            <div className="hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400">Microclimate</span>
-                <span className="text-xs font-bold font-sans">
+            <div className="col-span-2 sm:col-span-1 flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">Microclimate</span>
+                <span className="text-xs font-bold font-sans truncate">
                   {telemetry.temperatureC}°C · {telemetry.humidityPercent}% RH
                 </span>
               </div>
@@ -479,7 +479,7 @@ export function App() {
           <button
             onClick={handleRunDiagnosis}
             disabled={isLoading || !currentImage}
-            className={`w-full md:w-auto min-w-[300px] px-8 py-4 rounded-2xl font-bold text-[15px] sm:text-base tracking-tight transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95 group ${
+            className={`w-full lg:w-auto min-w-0 sm:min-w-[280px] lg:min-w-[300px] px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base tracking-tight transition-all flex items-center justify-center gap-2.5 sm:gap-3 shadow-lg active:scale-95 group ${
               isLoading
                 ? 'bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 shadow-[0_0_24px_rgba(16,185,129,0.25)] cursor-wait'
                 : !currentImage
@@ -565,8 +565,8 @@ export function App() {
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="font-medium">AgroPulse Edge AI · Agronomic Neural Engine v2.4</span>
-            <span className="text-slate-300 dark:text-neutral-600">·</span>
-            <span className="font-mono text-[11px] text-slate-400 dark:text-neutral-500">120 FPS View Transitions</span>
+            <span className="text-slate-300 dark:text-neutral-600 hidden sm:inline">·</span>
+            <span className="font-mono text-[11px] text-slate-400 dark:text-neutral-500 hidden sm:inline">120 FPS View Transitions</span>
           </div>
           <button
             onClick={() => setIsInspectorOpen(true)}
@@ -579,11 +579,46 @@ export function App() {
 
       </main>
 
-      {/* Mobile Floating Inspector Trigger (< 640px viewports) */}
-      <div className="sm:hidden fixed bottom-4 right-4 z-40">
+      {/* Mobile Sticky Bottom Command Bar (Viewport < 1024px) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 p-2.5 sm:p-3 bg-white/95 dark:bg-[#0E1013]/95 backdrop-blur-md border-t border-slate-200/80 dark:border-white/[0.08] shadow-[0_-4px_24px_rgba(0,0,0,0.08)] pb-[max(0.65rem,env(safe-area-inset-bottom))]">
+        <button
+          onClick={handleRunDiagnosis}
+          disabled={isLoading || !currentImage}
+          className={`w-full py-3.5 px-4 rounded-xl font-bold text-sm tracking-tight transition-all flex items-center justify-center gap-2.5 shadow-md active:scale-[0.98] ${
+            isLoading
+              ? 'bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 cursor-wait'
+              : !currentImage
+              ? 'bg-slate-100 dark:bg-[#1E2024] text-slate-400 dark:text-neutral-500 border border-slate-200 dark:border-white/10'
+              : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/30'
+          }`}
+        >
+          {isLoading ? (
+            <>
+              <RefreshCw className="w-4 h-4 animate-spin text-emerald-400 flex-shrink-0" />
+              <span className="font-semibold truncate">
+                {cookingStage === 1 ? 'Scanning Foliar Tissue...' : 'Fusing Soil Telemetry...'}
+              </span>
+            </>
+          ) : !currentImage ? (
+            <>
+              <Camera className="w-4 h-4 text-slate-400 dark:text-neutral-500" />
+              <span>Snap or Choose a Leaf Above</span>
+            </>
+          ) : (
+            <>
+              <Zap className="w-4 h-4 text-emerald-200 animate-pulse" />
+              <span>Check My Plant & Get Care Plan</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Floating Inspector Trigger (< 1024px viewports, positioned above sticky bar) */}
+      <div className="lg:hidden fixed bottom-[72px] right-3.5 z-40">
         <button
           onClick={() => setIsInspectorOpen(true)}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#141517]/95 text-neutral-200 text-xs font-semibold shadow-lg border border-white/[0.08] backdrop-blur-md"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#141517]/90 text-neutral-200 text-[11px] font-semibold shadow-lg border border-white/[0.08] backdrop-blur-md"
         >
           <Cpu className="w-3.5 h-3.5 text-emerald-400" />
           <span>System</span>
