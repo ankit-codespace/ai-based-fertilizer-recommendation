@@ -1,4 +1,4 @@
-﻿# 🌾 AgroPulse AI — Product Changelog & Architecture Evolution
+# 🌾 AgroPulse AI — Product Changelog & Architecture Evolution
 
 All notable changes, architectural pivots, UX refinements, and hardware integrations are documented in this file.
 
@@ -6,11 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [Unreleased] - 2026-09-17
+## [1.3.1] - 2026-09-17
 
-### 🎯 Planned: Optical Viewfinder Precision Alignment (In Review)
-- **Problem**: In mobile web views, the camera container collapsed to intrinsic 16:9 aspect ratio inside a min-h flexbox parent, causing the 4 focus corner brackets to float detached in empty white space above and below the camera.
-- **Top 1% SaaS Solution**: Enforce full-bleed bsolute inset-0 camera framing with guaranteed viewport height (h-[340px]), placing high-precision reticle corners directly inside the live camera feed with an optical vignette drop-shadow.
+### 🎯 Optical Viewfinder Precision Alignment (Full-Bleed Lens Fix)
+- **Resolved**: Fixed mobile camera viewport collapsing to intrinsic 16:9 aspect ratio inside a `min-h` flexbox container.
+- **Full-Bleed Edge-to-Edge Feed**: Viewport container standardized to solid `h-[340px] sm:h-[350px] lg:h-[360px]` across breakpoints, with webcam wrapper enforcing `absolute inset-0 w-full h-full object-cover`.
+- **Integrated HUD Reticles**: Pinned the 4 precision viewfinder corner brackets directly inside the active video bounds with luminous `#B8F234` stroke and deep optical drop-shadow, eliminating detached ghost brackets and empty white grid padding.
+- **Ergonomic Tuning Placement**: Positioned the `☀️ Bright ON` booster neatly at `top-3.5 right-11`, preventing any overlap with optical reticle brackets.
 
 ---
 

@@ -187,7 +187,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
         </div>
 
         {/* Scanner Viewport — strictly bounded hero focal point */}
-        <div className="relative w-full min-h-[310px] sm:min-h-[330px] lg:h-[350px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
+        <div className="relative w-full h-[340px] sm:h-[350px] lg:h-[360px] bg-slate-50/70 dark:bg-[#090A0C] flex items-center justify-center transition-all blueprint-grid overflow-hidden">
 
           {/* Optical Scanner Laser & HUD Layer while loading */}
           {isLoading && (
@@ -229,22 +229,38 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
           )}
 
           {/* Precision surgical viewfinder corner brackets */}
-          <div className={`absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 transition-colors duration-300 rounded-tl-sm pointer-events-none z-20 ${
-            isLoading ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' : 'border-slate-300 dark:border-white/20'
+          <div className={`absolute top-3.5 left-3.5 w-6 h-6 border-t-2 border-l-2 transition-all duration-300 rounded-tl-sm pointer-events-none z-20 ${
+            isLoading 
+              ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' 
+              : (sourceMode === 'webcam' || currentImage)
+              ? 'border-[#B8F234] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
+              : 'border-slate-300 dark:border-white/20'
           }`} />
-          <div className={`absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 transition-colors duration-300 rounded-tr-sm pointer-events-none z-20 ${
-            isLoading ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' : 'border-slate-300 dark:border-white/20'
+          <div className={`absolute top-3.5 right-3.5 w-6 h-6 border-t-2 border-r-2 transition-all duration-300 rounded-tr-sm pointer-events-none z-20 ${
+            isLoading 
+              ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' 
+              : (sourceMode === 'webcam' || currentImage)
+              ? 'border-[#B8F234] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
+              : 'border-slate-300 dark:border-white/20'
           }`} />
-          <div className={`absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 transition-colors duration-300 rounded-bl-sm pointer-events-none z-20 ${
-            isLoading ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' : 'border-slate-300 dark:border-white/20'
+          <div className={`absolute bottom-3.5 left-3.5 w-6 h-6 border-b-2 border-l-2 transition-all duration-300 rounded-bl-sm pointer-events-none z-20 ${
+            isLoading 
+              ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' 
+              : (sourceMode === 'webcam' || currentImage)
+              ? 'border-[#B8F234] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
+              : 'border-slate-300 dark:border-white/20'
           }`} />
-          <div className={`absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 transition-colors duration-300 rounded-br-sm pointer-events-none z-20 ${
-            isLoading ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' : 'border-slate-300 dark:border-white/20'
+          <div className={`absolute bottom-3.5 right-3.5 w-6 h-6 border-b-2 border-r-2 transition-all duration-300 rounded-br-sm pointer-events-none z-20 ${
+            isLoading 
+              ? 'border-[#B8F234] shadow-[0_0_10px_rgba(184,242,52,0.8)]' 
+              : (sourceMode === 'webcam' || currentImage)
+              ? 'border-[#B8F234] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]'
+              : 'border-slate-300 dark:border-white/20'
           }`} />
 
           {/* Webcam live stream */}
           {sourceMode === 'webcam' && (
-            <div className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center overflow-hidden">
               <video 
                 ref={videoRef} 
                 autoPlay 
@@ -256,7 +272,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
               />
 
               {/* Camera Tuning Controls (Brightness Boost) */}
-              <div className="absolute top-3.5 right-3.5 z-30 flex items-center gap-1.5">
+              <div className="absolute top-3.5 right-11 z-30 flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => setBrightnessBoost(!brightnessBoost)}
@@ -293,7 +309,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
 
           {/* Uploaded image display */}
           {sourceMode === 'upload' && currentImage && (
-            <div className="relative w-full h-full flex items-center justify-center bg-[#070D09] overflow-hidden">
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-[#070D09] overflow-hidden">
               <img
                 src={currentImage}
                 alt="Target Crop Leaf"
