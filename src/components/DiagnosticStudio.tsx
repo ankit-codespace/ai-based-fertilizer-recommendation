@@ -92,9 +92,11 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
       canvas.height = video.videoHeight || 480;
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        // Boost brightness for crisp, clear indoor captures
+        // HDR color grade for rich leaf contrast and vibrant chlorophyll/symptoms
         if (brightnessBoost) {
-          ctx.filter = 'brightness(1.22) contrast(1.08) saturate(1.1)';
+          ctx.filter = 'brightness(1.18) contrast(1.16) saturate(1.24)';
+        } else {
+          ctx.filter = 'contrast(1.08) saturate(1.12)';
         }
         
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -267,7 +269,9 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 playsInline 
                 className="w-full h-full object-cover" 
                 style={{
-                  filter: brightnessBoost ? 'brightness(1.22) contrast(1.08) saturate(1.1)' : 'none'
+                  filter: brightnessBoost 
+                    ? 'brightness(1.18) contrast(1.16) saturate(1.24)' 
+                    : 'contrast(1.08) saturate(1.12)'
                 }}
               />
 

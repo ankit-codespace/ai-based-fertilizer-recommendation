@@ -4,6 +4,15 @@ All notable changes, architectural pivots, UX refinements, and hardware integrat
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and adheres to clean semantic release milestones.
 
+## [1.3.3] - 2026-09-17
+
+### 🎨 Live Camera HDR Color Grade (Rich Contrast & Vibrant Saturation)
+- **Contrast Boost (+16%)**: Upgraded live webcam contrast (`contrast(1.16)`) to eliminate milky, washed-out tones common on laptop cameras, giving leaf veins and necrotic lesions crisp definition.
+- **Vibrant Saturation (+24%)**: Lifted saturation (`saturate(1.24)`) so chlorotic yellowing, early blight brown spots, and healthy leaf chlorophyll pop with high dynamic range.
+- **Synchronized Snapshot Pipeline**: Baked the identical contrast and saturation grading into the snapshot canvas export for accurate, high-contrast AI vision inspection.
+
+---
+
 ## [1.3.2] - 2026-09-17
 
 ### 🌿 Aspect-Ratio Preserved Specimen Fitting (Zero Distortion & Zero Overflow)
