@@ -4,6 +4,13 @@ All notable changes, architectural pivots, UX refinements, and hardware integrat
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and adheres to clean semantic release milestones.
 
+## [1.3.2] - 2026-09-17
+
+### 🌿 Aspect-Ratio Preserved Specimen Fitting (Zero Distortion & Zero Overflow)
+- **Zero Stretching & Zero Distortion**: Standardized default image fitting to `object-contain` within the fixed `h-[340px] sm:h-[350px] lg:h-[360px]` optical viewport.
+- **50/50 Dual-Engine Integrity**: Guaranteed that tall portrait leaves (e.g. Mango) no longer expand the viewport to 550px+, preventing `INPUT 2 · Soil Moisture Sensor` from being pushed off-screen on mobile devices.
+- **Full Leaf Visibility**: Preserved 100% of the leaf surface (tip to stem) so marginal and tip-burn symptoms are never cropped out, with the 1-tap `Fit / Fill` toggle retained for optional edge-to-edge fill.
+
 ---
 
 ## [1.3.1] - 2026-09-17

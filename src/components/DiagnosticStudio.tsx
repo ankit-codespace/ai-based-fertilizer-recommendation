@@ -42,7 +42,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
   onSelectSample
 }) => {
   const [sourceMode, setSourceMode] = useState<'upload' | 'webcam'>('upload');
-  const [imageFit, setImageFit] = useState<'cover' | 'contain'>('cover');
+  const [imageFit, setImageFit] = useState<'cover' | 'contain'>('contain');
   const [isWebcamActive, setIsWebcamActive] = useState(false);
   const [brightnessBoost, setBrightnessBoost] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
