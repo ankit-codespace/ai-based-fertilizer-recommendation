@@ -4,6 +4,15 @@ All notable changes, architectural pivots, UX refinements, and hardware integrat
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and adheres to clean semantic release milestones.
 
+## [1.3.4] - 2026-09-17
+
+### 🪞 Natural Mirror Reflection (Standardized Like Real Mirrors & Zoom)
+- **Natural Mirror Behavior**: Standardized live webcam to permanent mirror reflection (`scale-x-[-1]`), behaving exactly like a real physical mirror, FaceTime, or Zoom. Moving hands or leaves to the left moves left on screen.
+- **Zero Distracting Options**: Removed any toggle buttons or settings, keeping the camera UI clean, minimal, and completely friction-free.
+- **Synchronized Canvas Output**: The captured snapshot is horizontally flipped (`ctx.scale(-1, 1)`) so the saved photo matches the user's mirror preview pixel-for-pixel.
+
+---
+
 ## [1.3.3] - 2026-09-17
 
 ### 🎨 Live Camera HDR Color Grade (Rich Contrast & Vibrant Saturation)

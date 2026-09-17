@@ -99,6 +99,10 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
           ctx.filter = 'contrast(1.08) saturate(1.12)';
         }
         
+        // Natural mirror flip so captured photo identically matches mirror preview
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
         onImageChange(dataUrl);
@@ -267,7 +271,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                 ref={videoRef} 
                 autoPlay 
                 playsInline 
-                className="w-full h-full object-cover" 
+                className="w-full h-full object-cover scale-x-[-1]" 
                 style={{
                   filter: brightnessBoost 
                     ? 'brightness(1.18) contrast(1.16) saturate(1.24)' 
