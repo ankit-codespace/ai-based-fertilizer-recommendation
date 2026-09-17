@@ -78,6 +78,7 @@ export function App() {
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
   const [isSamplesModalOpen, setIsSamplesModalOpen] = useState(false);
+  const [isSampleActive, setIsSampleActive] = useState(false);
   const [logs, setLogs] = useState<SystemLog[]>([]);
 
   // Stale request guard & step 3 scroll anchor
@@ -147,6 +148,7 @@ export function App() {
     requestIdRef.current += 1;
     setIsLoading(false);
     setCurrentImage(sample.imageUrl);
+    setIsSampleActive(true);
     setVisionResult(null);
     setPrescription(null);
     setDiagnosticError(null);
@@ -346,14 +348,14 @@ export function App() {
         {/* ==================================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
-          {/* INPUT 1: LEAF CELLULAR SCANNER (7 of 12 cols for cinematic viewfinder) */}
-          <div className="lg:col-span-7 flex flex-col gap-3">
+          {/* INPUT 1: LEAF CELLULAR SCANNER (6 of 12 cols - 50% Balanced Split) */}
+          <div className="lg:col-span-6 flex flex-col gap-3">
             
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0 animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-neutral-400">
-                  Input 1 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Foliage Cellular Scanner</span>
+                  Input 1 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Leaf Photo Scanner</span>
                 </span>
               </div>
               <span className="text-[11px] font-mono text-slate-400 dark:text-neutral-500 font-medium">
@@ -375,6 +377,7 @@ export function App() {
                 requestIdRef.current += 1;
                 setIsLoading(false);
                 setCurrentImage(null);
+                setIsSampleActive(false);
                 setVisionResult(null);
                 setPrescription(null);
                 setDiagnosticError(null);
@@ -389,24 +392,28 @@ export function App() {
 
           </div>
 
-          {/* INPUT 2: SOIL & ENVIRONMENTAL TELEMETRY (5 of 12 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-3">
+          {/* INPUT 2: SOIL & ENVIRONMENTAL TELEMETRY (6 of 12 cols - 50% Balanced Split) */}
+          <div className="lg:col-span-6 flex flex-col gap-3">
             
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0 animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-neutral-400">
-                  Input 2 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Soil & Telemetry Probe</span>
+                  Input 2 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Soil Moisture Sensor</span>
                 </span>
               </div>
               <span className="text-[11px] font-mono text-slate-400 dark:text-neutral-500 font-medium">
-                {isProbeConnected ? 'ESP32 Wi-Fi Stream' : `${telemetry.moisturePercent}% Moisture Active`}
+                {isProbeConnected ? 'Live ESP32 Stream' : isSampleActive ? 'Field Sample Preset' : `${telemetry.moisturePercent}% Manual Reading`}
               </span>
             </div>
 
             <TelemetryHUD
               telemetry={telemetry}
-              onUpdateMoisture={(val) => setTelemetry(prev => ({ ...prev, moisturePercent: val }))}
+              isSampleActive={isSampleActive}
+              onUpdateMoisture={(val) => {
+                setIsSampleActive(false);
+                setTelemetry(prev => ({ ...prev, moisturePercent: val }));
+              }}
               onUpdateTemp={(val) => setTelemetry(prev => ({ ...prev, temperatureC: val }))}
               onUpdateHumidity={(val) => setTelemetry(prev => ({ ...prev, humidityPercent: val }))}
               isProbeConnected={isProbeConnected}
@@ -436,7 +443,35 @@ export function App() {
           {/* Synchronized Live Telemetry Evidence Group */}
           <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 sm:gap-3 w-full lg:w-auto">
             
-            {/* Visual Sensor */}
+            {/* 1. Soil Probe Sensor (Primary Medium) */}
+            <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl border transition-all ${
+              isProbeConnected 
+                ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-200 shadow-xs'
+                : 'bg-slate-50 dark:bg-[#1B1D22] border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs'
+            }`}>
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${isProbeConnected ? 'bg-emerald-500 animate-pulse' : telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">
+                  {isProbeConnected ? 'Live Soil Probe' : 'Soil Sensor'}
+                </span>
+                <span className="text-xs font-bold font-sans truncate">
+                  {telemetry.moisturePercent}% ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Good'})
+                </span>
+              </div>
+            </div>
+
+            {/* 2. Microclimate */}
+            <div className="col-span-2 sm:col-span-1 flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">Weather</span>
+                <span className="text-xs font-bold font-sans truncate">
+                  {telemetry.temperatureC}°C · {telemetry.humidityPercent}% RH
+                </span>
+              </div>
+            </div>
+
+            {/* 3. Visual Leaf Sensor */}
             <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl border transition-all ${
               currentImage 
                 ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-200 shadow-xs'
@@ -444,31 +479,9 @@ export function App() {
             }`}>
               <span className={`w-2 h-2 rounded-full flex-shrink-0 ${currentImage ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300 dark:bg-neutral-600'}`} />
               <div className="flex flex-col min-w-0">
-                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono opacity-70 truncate">Visual Sensor</span>
+                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono opacity-70 truncate">Leaf Sensor</span>
                 <span className="text-xs font-bold font-sans truncate">
                   {currentImage ? `${farmProfile.cropName.split(' ')[0]} (Ready ✓)` : 'No Leaf Photo'}
-                </span>
-              </div>
-            </div>
-
-            {/* Soil Probe Sensor */}
-            <div className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
-              <div className="flex flex-col min-w-0">
-                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">Soil Probe</span>
-                <span className="text-xs font-bold font-sans truncate">
-                  {telemetry.moisturePercent}% ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Optimal'})
-                </span>
-              </div>
-            </div>
-
-            {/* Microclimate */}
-            <div className="col-span-2 sm:col-span-1 flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-              <div className="flex flex-col min-w-0">
-                <span className="text-[9.5px] sm:text-[10px] uppercase font-bold tracking-wider font-mono text-slate-400 dark:text-neutral-400 truncate">Microclimate</span>
-                <span className="text-xs font-bold font-sans truncate">
-                  {telemetry.temperatureC}°C · {telemetry.humidityPercent}% RH
                 </span>
               </div>
             </div>
@@ -479,7 +492,7 @@ export function App() {
           <button
             onClick={handleRunDiagnosis}
             disabled={isLoading || !currentImage}
-            className={`w-full lg:w-auto min-w-0 sm:min-w-[280px] lg:min-w-[300px] px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base tracking-tight transition-all flex items-center justify-center gap-2.5 sm:gap-3 shadow-lg active:scale-95 group ${
+            className={`w-full lg:w-auto min-w-0 sm:min-w-[280px] lg:min-w-[320px] px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base tracking-tight transition-all flex items-center justify-center gap-2.5 sm:gap-3 shadow-lg active:scale-95 group ${
               isLoading
                 ? 'bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 shadow-[0_0_24px_rgba(16,185,129,0.25)] cursor-wait'
                 : !currentImage
@@ -492,19 +505,19 @@ export function App() {
                 <RefreshCw className="w-5 h-5 animate-spin text-emerald-400 flex-shrink-0" />
                 <span className="font-semibold tracking-wide">
                   {cookingStage === 1
-                    ? 'Scanning Leaf Cellular Structures...'
-                    : 'Fusing Foliar & Soil Telemetry...'}
+                    ? 'Scanning Leaf Tissue...'
+                    : 'Fusing Soil Telemetry & Leaf Data...'}
                 </span>
               </>
             ) : !currentImage ? (
               <>
                 <Camera className="w-5 h-5 text-slate-400 dark:text-neutral-500" />
-                <span>Snap or Choose a Leaf Above</span>
+                <span>Soil Set to {telemetry.moisturePercent}% • Add Leaf Photo to Finish Plan</span>
               </>
             ) : (
               <>
                 <Zap className="w-5 h-5 text-emerald-200 animate-pulse" />
-                <span>Check My Plant & Get Care Plan</span>
+                <span>Mix Soil ({telemetry.moisturePercent}%) + Leaf to Make Fertilizer Recipe</span>
                 <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
               </>
             )}
@@ -520,25 +533,25 @@ export function App() {
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0 animate-pulse" />
               <span className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-neutral-400">
-                Step 3 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Custom Plant Care Plan</span>
+                Step 3 · <span className="font-serif italic normal-case tracking-normal font-semibold text-slate-900 dark:text-neutral-200">Precision Fertilizer Recipe & Water Plan</span>
               </span>
             </div>
             
-            {/* 3-Step Mini Progress Pipeline */}
+            {/* 3-Step Mini Progress Pipeline (Soil First, Leaf Second, Plan Third) */}
             <div className="hidden sm:flex items-center gap-3 text-xs font-medium text-slate-400 dark:text-neutral-500">
-              <span className={`flex items-center gap-1 ${currentImage ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''}`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${currentImage ? 'bg-emerald-500' : 'bg-slate-300'}`} />
-                1. Leaf Vision
-              </span>
-              <span>—</span>
               <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                2. Soil Moisture
+                1. Soil Moisture
+              </span>
+              <span>—</span>
+              <span className={`flex items-center gap-1 ${currentImage ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${currentImage ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+                2. Leaf Vision
               </span>
               <span>—</span>
               <span className={`flex items-center gap-1 ${prescription ? 'text-emerald-600 dark:text-emerald-400 font-bold' : ''}`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${prescription ? 'bg-emerald-500' : 'bg-slate-300'}`} />
-                3. Care Plan
+                3. Fertilizer Recipe
               </span>
             </div>
           </div>
@@ -585,7 +598,23 @@ export function App() {
           
           {/* Synchronized Live Telemetry Evidence Group (Desktop & Tablet) */}
           <div className="hidden sm:flex items-center gap-2.5">
-            {/* Visual Sensor */}
+            {/* 1. Soil Probe */}
+            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold ${
+              isProbeConnected 
+                ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-200' 
+                : 'bg-slate-50 dark:bg-[#1B1D22] border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200'
+            }`}>
+              <span className={`w-2 h-2 rounded-full ${isProbeConnected ? 'bg-emerald-500 animate-pulse' : telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
+              <span>{isProbeConnected ? 'Live Soil' : 'Soil'}: {telemetry.moisturePercent}% ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Good'})</span>
+            </div>
+
+            {/* 2. Microclimate */}
+            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 text-xs font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span>{telemetry.temperatureC}°C · {telemetry.humidityPercent}% RH</span>
+            </div>
+
+            {/* 3. Visual Sensor */}
             <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold ${
               currentImage 
                 ? 'bg-emerald-50/80 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-900 dark:text-emerald-200' 
@@ -593,18 +622,6 @@ export function App() {
             }`}>
               <span className={`w-2 h-2 rounded-full ${currentImage ? 'bg-emerald-500 animate-pulse' : 'bg-slate-300 dark:bg-neutral-600'}`} />
               <span>{currentImage ? `${farmProfile.cropName.split(' ')[0]} (Ready ✓)` : 'No Leaf Photo'}</span>
-            </div>
-
-            {/* Soil Probe */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 text-xs font-semibold">
-              <span className={`w-2 h-2 rounded-full ${telemetry.moisturePercent < 30 ? 'bg-amber-500' : telemetry.moisturePercent > 70 ? 'bg-blue-500' : 'bg-emerald-500'}`} />
-              <span>Soil: {telemetry.moisturePercent}% ({telemetry.moisturePercent < 30 ? 'Dry' : telemetry.moisturePercent > 70 ? 'Wet' : 'Optimal'})</span>
-            </div>
-
-            {/* Microclimate */}
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1B1D22] border border-slate-200 dark:border-white/10 text-slate-800 dark:text-neutral-200 text-xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>{telemetry.temperatureC}°C · {telemetry.humidityPercent}% RH</span>
             </div>
           </div>
 
@@ -630,12 +647,12 @@ export function App() {
             ) : !currentImage ? (
               <>
                 <Camera className="w-4 h-4 text-slate-400 dark:text-neutral-500" />
-                <span>Snap or Choose a Leaf Above</span>
+                <span>Soil Set to {telemetry.moisturePercent}% • Add Leaf Photo to Finish Plan</span>
               </>
             ) : (
               <>
                 <Zap className="w-4 h-4 text-emerald-200 animate-pulse" />
-                <span>Check My Plant & Get Care Plan</span>
+                <span>Mix Soil ({telemetry.moisturePercent}%) + Leaf to Make Fertilizer Recipe</span>
                 <ArrowRight className="w-3.5 h-3.5 ml-0.5" />
               </>
             )}

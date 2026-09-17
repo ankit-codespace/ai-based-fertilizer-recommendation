@@ -23,6 +23,7 @@ interface TelemetryHUDProps {
   esp32Ip: string;
   onEsp32IpChange: (ip: string) => void;
   onRefreshTelemetry?: () => void;
+  isSampleActive?: boolean;
 }
 
 export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
@@ -33,7 +34,8 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
   isProbeConnected = false,
   esp32Ip,
   onEsp32IpChange,
-  onRefreshTelemetry
+  onRefreshTelemetry,
+  isSampleActive = false
 }) => {
   const [isIpDrawerOpen, setIsIpDrawerOpen] = useState(false);
   const moisture = telemetry.moisturePercent;
@@ -105,7 +107,7 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <h3 className="text-[13px] font-bold text-slate-900 dark:text-neutral-100 tracking-tight leading-none whitespace-nowrap">
-                  Soil Moisture
+                  Soil Moisture Sensor
                 </h3>
                 <span className={`inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold ${
                   moisture < 30 ? 'text-amber-600 dark:text-amber-400' : moisture > 70 ? 'text-sky-600 dark:text-sky-400' : 'text-emerald-600 dark:text-emerald-400'
@@ -115,7 +117,11 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5 truncate">
-                {isProbeConnected ? `Streaming from ${esp32Ip}` : 'Live or simulated soil probe sensor'}
+                {isProbeConnected 
+                  ? `Streaming live hardware from ${esp32Ip}` 
+                  : isSampleActive 
+                  ? `Pre-filled from field sample (${moisture}%)`
+                  : 'Probe offline — slide below to set manually'}
               </p>
             </div>
           </div>
@@ -123,10 +129,14 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
           <button
             type="button"
             onClick={() => setIsIpDrawerOpen(!isIpDrawerOpen)}
-            className="flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#1A1B1E] text-slate-700 dark:text-neutral-200 hover:bg-slate-200 dark:hover:bg-[#222428] transition-all border border-slate-200/70 dark:border-white/[0.07] flex-shrink-0"
+            className={`flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-lg transition-all border flex-shrink-0 ${
+              isProbeConnected
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 shadow-xs'
+                : 'bg-slate-100 dark:bg-[#1A1B1E] text-slate-700 dark:text-neutral-200 hover:bg-slate-200 dark:hover:bg-[#222428] border-slate-200/70 dark:border-white/[0.07]'
+            }`}
           >
-            <Wifi className={`w-3 h-3 ${isProbeConnected ? 'text-emerald-500' : 'text-slate-400'}`} />
-            <span>{isProbeConnected ? 'Connected' : 'ESP32 Wi-Fi'}</span>
+            <Wifi className={`w-3 h-3 ${isProbeConnected ? 'text-emerald-500 animate-pulse' : 'text-slate-400'}`} />
+            <span>{isProbeConnected ? 'Probe Connected' : 'Connect ESP32'}</span>
             {isIpDrawerOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           </button>
         </div>
@@ -158,6 +168,35 @@ export const TelemetryHUD: React.FC<TelemetryHUDProps> = ({
             </span>
           </div>
         )}
+
+        {/* Transparent Soil Hardware / Calibration Status Banner */}
+        <div className="mb-2">
+          {isProbeConnected ? (
+            <div className="w-full flex items-center justify-between text-xs text-emerald-800 dark:text-emerald-300 bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-300/70 dark:border-emerald-500/30 p-2.5 rounded-xl">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+                <span className="font-semibold truncate">Live Sensor Active: Ingesting probe telemetry from {esp32Ip}</span>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-200/60 dark:bg-emerald-900/60 font-bold flex-shrink-0 ml-2">LIVE PROBE</span>
+            </div>
+          ) : isSampleActive ? (
+            <div className="w-full flex items-center justify-between text-xs text-sky-800 dark:text-sky-300 bg-sky-50/80 dark:bg-sky-950/30 border border-sky-300/70 dark:border-sky-500/30 p-2.5 rounded-xl">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-sky-500 flex-shrink-0" />
+                <span className="font-semibold truncate">Pre-filled from field sample ({moisture}%). You can slide below to adjust anytime.</span>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-200/60 dark:bg-sky-900/60 font-bold flex-shrink-0 ml-2">SAMPLE DATA</span>
+            </div>
+          ) : (
+            <div className="w-full flex items-center justify-between text-xs text-amber-800 dark:text-amber-300 bg-amber-50/80 dark:bg-amber-950/30 border border-amber-300/70 dark:border-amber-500/30 p-2.5 rounded-xl">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0 animate-ping" />
+                <span className="font-semibold truncate">Probe not connected. Slide the bar below to set your soil moisture, or connect ESP32.</span>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-200/60 dark:bg-amber-900/60 font-bold flex-shrink-0 ml-2">MANUAL SLIDER</span>
+            </div>
+          )}
+        </div>
 
         {/* Progress Ring Gauge (Optimized Golden Viewport - Spacious Apple-grade ring) */}
         <div className="relative flex flex-col items-center justify-center my-1 sm:my-2">
