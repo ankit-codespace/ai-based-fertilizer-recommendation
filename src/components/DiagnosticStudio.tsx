@@ -12,7 +12,9 @@ import {
   Sparkles,
   X,
   Minimize2,
-  Maximize2
+  Maximize2,
+  Sun,
+  FlipHorizontal
 } from 'lucide-react';
 import { SAMPLE_LEAVES } from './SampleLeavesModal';
 import { SampleLeaf, VisionAnalysisResult } from '../types';
@@ -43,6 +45,8 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
   const [sourceMode, setSourceMode] = useState<'upload' | 'webcam'>('upload');
   const [imageFit, setImageFit] = useState<'cover' | 'contain'>('cover');
   const [isWebcamActive, setIsWebcamActive] = useState(false);
+  const [isMirrored, setIsMirrored] = useState(true);
+  const [brightnessBoost, setBrightnessBoost] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -84,13 +88,25 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
 
   const captureWebcamSnapshot = () => {
     if (videoRef.current) {
+      const video = videoRef.current;
       const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth || 640;
-      canvas.height = videoRef.current.videoHeight || 480;
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+        // Boost brightness for crisp, clear indoor captures
+        if (brightnessBoost) {
+          ctx.filter = 'brightness(1.22) contrast(1.08) saturate(1.1)';
+        }
+        
+        // Mirror snapshot if mirror preview mode is active
+        if (isMirrored) {
+          ctx.translate(canvas.width, 0);
+          ctx.scale(-1, 1);
+        }
+        
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
         onImageChange(dataUrl);
         setSourceMode('upload');
       }
@@ -237,7 +253,46 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
           {/* Webcam live stream */}
           {sourceMode === 'webcam' && (
             <div className="relative w-full h-full bg-black flex items-center justify-center overflow-hidden">
-              <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+              <video 
+                ref={videoRef} 
+                autoPlay 
+                playsInline 
+                className={`w-full h-full object-cover transition-transform duration-200 ${isMirrored ? 'scale-x-[-1]' : ''}`} 
+                style={{
+                  filter: brightnessBoost ? 'brightness(1.22) contrast(1.08) saturate(1.1)' : 'none'
+                }}
+              />
+
+              {/* Camera Tuning Controls (Flip & Brightness Boost) */}
+              <div className="absolute top-3.5 right-3.5 z-30 flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setBrightnessBoost(!brightnessBoost)}
+                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold backdrop-blur-md border transition-all cursor-pointer ${
+                    brightnessBoost
+                      ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.45)]'
+                      : 'bg-black/60 hover:bg-black/80 text-white/80 border-white/15'
+                  }`}
+                  title={brightnessBoost ? 'Low-light boost is ON (+20% brighter)' : 'Turn on low-light boost'}
+                >
+                  <Sun className="w-3.5 h-3.5" />
+                  <span>{brightnessBoost ? 'Bright ON' : 'Bright'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMirrored(!isMirrored)}
+                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-full text-[11px] font-bold backdrop-blur-md border transition-all cursor-pointer ${
+                    isMirrored
+                      ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
+                      : 'bg-black/60 hover:bg-black/80 text-white/80 border-white/15'
+                  }`}
+                  title={isMirrored ? 'Camera is mirrored. Click to flip normal.' : 'Camera is normal. Click to mirror.'}
+                >
+                  <FlipHorizontal className="w-3.5 h-3.5" />
+                  <span>{isMirrored ? 'Mirror' : 'Normal'}</span>
+                </button>
+              </div>
               
               {/* Focus reticle */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
