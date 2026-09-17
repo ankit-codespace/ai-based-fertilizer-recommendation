@@ -198,7 +198,8 @@ export function App() {
       const visionPromise = runStage1VisionExtraction(
         currentImage, 
         (msg) => addLog(msg, 'Vision API', 'info'),
-        farmProfile.cropName
+        farmProfile.cropName,
+        isSampleActive
       );
 
       const [stage1Result] = await Promise.all([visionPromise, minDwellPromise]);
@@ -369,6 +370,7 @@ export function App() {
                 requestIdRef.current += 1;
                 setIsLoading(false);
                 setCurrentImage(b64);
+                setIsSampleActive(false);
                 setVisionResult(null);
                 setPrescription(null);
                 setDiagnosticError(null);
@@ -386,6 +388,7 @@ export function App() {
               isLoading={isLoading}
               loadingStep={loadingStep}
               visionResult={visionResult}
+              diagnosticError={diagnosticError}
               onOpenSamplesModal={() => setIsSamplesModalOpen(true)}
               onSelectSample={handleSelectSample}
             />

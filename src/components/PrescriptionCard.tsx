@@ -331,26 +331,42 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
     );
   }
 
-  // 3. STAGE 2 RETRY STATE
-  if (diagnosticError && visionResult && visionResult.isPlant) {
+  // 3. ERROR / TOKEN EXHAUSTED STATE
+  if (diagnosticError) {
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-panel p-6 border border-amber-200 dark:border-amber-900/50 shadow-panel flex flex-col items-center justify-center text-center min-h-[380px] gap-3 font-sans animate-fade-in">
-        <div className="w-14 h-14 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-1 shadow-panel">
-          <AlertTriangle className="w-7 h-7" />
+      <div className="bg-white dark:bg-[#141518] rounded-[24px] p-6 sm:p-8 border border-amber-300 dark:border-amber-500/40 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center min-h-[380px] gap-4 font-sans animate-fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-500/40 flex items-center justify-center text-amber-600 dark:text-amber-400 shadow-sm">
+          <AlertTriangle className="w-8 h-8" />
         </div>
-        <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-100 font-display">
-          Plant Found: <span className="font-serif italic font-normal text-emerald-600">{visionResult.cropIdentified}</span>
-        </h3>
-        <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xs leading-relaxed">
-          {diagnosticError}
-        </p>
-        <button
-          onClick={onRetry}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-lime hover:bg-accent-limeHover text-accent-charcoal font-bold text-xs shadow-lime-glow transition-all active:scale-95 mt-2 font-display"
-        >
-          <RefreshCw className="w-4 h-4" />
-          <span>Try Again</span>
-        </button>
+        <div className="flex flex-col gap-1.5 max-w-md">
+          <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-neutral-100">
+            {diagnosticError.includes('Token') || diagnosticError.includes('API') ? 'AI Token Exhausted' : 'Diagnosis Interrupted'}
+          </h3>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-neutral-300 leading-relaxed font-medium">
+            {diagnosticError}
+          </p>
+        </div>
+        <div className="py-2.5 px-5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-300/80 dark:border-amber-500/40 text-xs sm:text-sm font-bold text-amber-800 dark:text-amber-300">
+          ⚠️ Please integrate API key in .env or switch to Sample Leaves
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+          {onOpenSamplesModal && (
+            <button
+              onClick={onOpenSamplesModal}
+              className="px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm transition-all shadow-sm active:scale-95 cursor-pointer"
+            >
+              Try Verified Sample Leaves →
+            </button>
+          )}
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              className="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#1E2024] dark:hover:bg-[#25282E] text-slate-800 dark:text-neutral-200 font-bold text-xs sm:text-sm transition-all border border-slate-200 dark:border-white/10 active:scale-95 cursor-pointer"
+            >
+              Try Again
+            </button>
+          )}
+        </div>
       </div>
     );
   }

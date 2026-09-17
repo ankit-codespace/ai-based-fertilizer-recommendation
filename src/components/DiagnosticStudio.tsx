@@ -26,6 +26,7 @@ interface DiagnosticStudioProps {
   isLoading: boolean;
   loadingStep: string;
   visionResult: VisionAnalysisResult | null;
+  diagnosticError?: string | null;
   onOpenSamplesModal: () => void;
   onSelectSample?: (sample: SampleLeaf) => void;
 }
@@ -38,6 +39,7 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
   isLoading,
   loadingStep,
   visionResult,
+  diagnosticError,
   onOpenSamplesModal,
   onSelectSample
 }) => {
@@ -347,6 +349,24 @@ export const DiagnosticStudio: React.FC<DiagnosticStudioProps> = ({
                     className="text-xs sm:text-[13px] font-bold text-[#B8F234] hover:underline"
                   >
                     Pick a leaf →
+                  </button>
+                </div>
+              )}
+
+              {/* Diagnostic / Token Exhausted Error Banner */}
+              {diagnosticError && (
+                <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between p-3.5 px-5 rounded-full bg-[#1C130D]/90 backdrop-blur-md border border-amber-500/50 text-white shadow-floating animate-fade-in">
+                  <div className="flex items-center gap-2 text-xs font-medium text-amber-200">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <span className="text-xs sm:text-[13px] font-semibold">
+                      {diagnosticError}
+                    </span>
+                  </div>
+                  <button
+                    onClick={onOpenSamplesModal}
+                    className="text-xs sm:text-[13px] font-bold text-[#B8F234] hover:underline whitespace-nowrap pl-2 cursor-pointer"
+                  >
+                    Try Sample Leaf →
                   </button>
                 </div>
               )}

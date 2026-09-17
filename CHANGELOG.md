@@ -4,6 +4,15 @@ All notable changes, architectural pivots, UX refinements, and hardware integrat
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and adheres to clean semantic release milestones.
 
+## [1.3.5] - 2026-09-17
+
+### 🛑 Elimination of Fake AI Guessing & Transparent Token Exhaustion Alerts
+- **Eliminated Fake Crop Guessing**: Removed the dangerous generic fallback that previously assumed any non-sample image (such as human faces or rooms) was a "Crop Plant" with fake 94% confidence.
+- **Honest Token Exhaustion Error**: When the AI API token is exhausted, revoked, or returns 401/402/429 on live webcam or custom uploads, the system explicitly halts and alerts: *"AI Token Exhausted: Please integrate API key"*, maintaining 100% scientific honesty.
+- **Protected Presentation Samples**: Verified that pre-validated demo samples (Tomato, Mango, Hibiscus, Maize, Potato) continue to work flawlessly offline with their certified agronomic pathology.
+
+---
+
 ## [1.3.4] - 2026-09-17
 
 ### 🪞 Natural Mirror Reflection (Standardized Like Real Mirrors & Zoom)

@@ -87,7 +87,8 @@ export function getPlainPathologyMeaning(term: string): string {
 export async function runStage1VisionExtraction(
   imageBase64: string,
   onLog?: (msg: string) => void,
-  cropHint?: string
+  cropHint?: string,
+  isSampleActive: boolean = false
 ): Promise<VisionAnalysisResult> {
   const startTime = performance.now();
   const grokKey = getGrokApiKey();
@@ -269,35 +270,49 @@ Return ONLY valid JSON matching this schema:
     }
   }
 
-  // 3. Bulletproof Clinical Botanical Fallback
-  onLog?.('[Stage 1 Vision] 🌿 Engaging Local Clinical Botanical Engine...');
+  // 3. Clinical Botanical Fallback (Protected For Verified Sample Leaves Only)
+  const isSampleMango = imageBase64.startsWith(SAMPLE_IMAGES.mango.slice(0, 80));
+  const isSampleTomato = imageBase64.startsWith(SAMPLE_IMAGES.tomato.slice(0, 80));
+  const isSampleHibiscus = imageBase64.startsWith(SAMPLE_IMAGES.hibiscus.slice(0, 80));
+  const isSamplePotato = imageBase64.startsWith(SAMPLE_IMAGES.potato.slice(0, 80));
+  const isSampleCorn = imageBase64.startsWith(SAMPLE_IMAGES.corn.slice(0, 80));
+
+  const isVerifiedSample = isSampleActive || isSampleMango || isSampleTomato || isSampleHibiscus || isSamplePotato || isSampleCorn;
+
+  // STRICT ZERO-HALLUCINATION RULE: Never fake a diagnosis on live webcam or custom uploads when API token is exhausted!
+  if (!isVerifiedSample) {
+    onLog?.('[Stage 1 Vision] ⚠️ AI token exhausted. Live camera/upload requires active API key.');
+    throw new Error('AI Token Exhausted: please integrate API key to scan live camera photos.');
+  }
+
+  onLog?.('[Stage 1 Vision] 🌿 Engaging Verified Botanical Sample Engine...');
   const duration = Math.round(performance.now() - startTime);
 
   const hint = (cropHint || '').toLowerCase();
-  const isMango = hint.includes('mango') || imageBase64.startsWith(SAMPLE_IMAGES.mango.slice(0, 80));
-  const isTomato = hint.includes('tomat') || imageBase64.startsWith(SAMPLE_IMAGES.tomato.slice(0, 80));
-  const isHibiscus = hint.includes('hibiscus') || imageBase64.startsWith(SAMPLE_IMAGES.hibiscus.slice(0, 80));
-  const isPotato = hint.includes('potato') || imageBase64.startsWith(SAMPLE_IMAGES.potato.slice(0, 80));
-  const isCorn = hint.includes('corn') || hint.includes('maize') || imageBase64.startsWith(SAMPLE_IMAGES.corn.slice(0, 80));
+  const isMango = isSampleMango || (hint.includes('mango') && hint !== 'auto-detect any crop');
+  const isTomato = isSampleTomato || (hint.includes('tomat') && hint !== 'auto-detect any crop');
+  const isHibiscus = isSampleHibiscus || (hint.includes('hibiscus') && hint !== 'auto-detect any crop');
+  const isPotato = isSamplePotato || (hint.includes('potato') && hint !== 'auto-detect any crop');
+  const isCorn = isSampleCorn || ((hint.includes('corn') || hint.includes('maize')) && hint !== 'auto-detect any crop');
 
-  let crop = 'Crop Plant';
-  let disease = 'V-Shaped Nitrogen Starvation';
-  let symptoms = ['V-shaped yellowing down central midrib', 'Pale yellow foliage'];
-  let defs = ['Nitrogen (N)'];
-  let status: 'Healthy' | 'Nutrient Deficient' | 'Fungal / Disease' | 'Pest Infestation' = 'Nutrient Deficient';
+  let crop = 'Tomato (Solanum lycopersicum)';
+  let disease = 'Early Blight (Alternaria solani)';
+  let symptoms = ['Brown circular target rings', 'Yellow ring around leaf spots', 'Curled brown leaf edges'];
+  let defs = ['Anti-Fungus Spray', 'Potassium (K) Food'];
+  let status: 'Healthy' | 'Nutrient Deficient' | 'Fungal / Disease' | 'Pest Infestation' = 'Fungal / Disease';
 
   let customBoxes = [
     { 
-      label: 'Marginal Chlorosis', 
-      simpleMeaning: 'Yellowing leaf edges',
+      label: 'Blight Target Rings', 
+      simpleMeaning: 'Brown circular fungal rings', 
       confidence: 0.94, 
-      area: { x: 18, y: 22, width: 44, height: 38 } 
+      area: { x: 22, y: 24, width: 44, height: 38 } 
     },
     { 
-      label: 'Tip Necrosis', 
-      simpleMeaning: 'Dead brown leaf tips',
-      confidence: 0.89, 
-      area: { x: 55, y: 50, width: 35, height: 32 } 
+      label: 'Chlorotic Halo', 
+      simpleMeaning: 'Yellow ring around leaf spot', 
+      confidence: 0.90, 
+      area: { x: 55, y: 50, width: 32, height: 32 } 
     }
   ];
 
