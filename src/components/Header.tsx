@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* ========================================================================= */}
         {/* ZONE 1: BRAND IDENTITY (PURE MONOLITHIC MARK & WORDMARK)                  */}
         {/* ========================================================================= */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0 group cursor-pointer" title="AgroPulse Intelligence">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0 group cursor-pointer" title="AgroVeda Intelligence">
           {/* Pure Living Organism Sprout Mark (No Box Background) */}
           <div className="relative flex items-center justify-center flex-shrink-0">
             <svg 
@@ -106,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Wordmark */}
           <div className="flex items-baseline gap-1">
             <span className="font-bold text-[15px] sm:text-[18px] text-slate-900 dark:text-white tracking-tight leading-none">
-              AgroPulse
+              AgroVeda
             </span>
             <span className="font-serif italic text-[13.5px] text-slate-500 dark:text-neutral-400 font-normal leading-none hidden md:inline">
               Intelligence

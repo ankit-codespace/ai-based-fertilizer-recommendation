@@ -1,6 +1,6 @@
-﻿/**
+/**
  * ============================================================================
- * AGROPULSE AI — ESP32-CAM MULTIMODAL AGRI-PROBE FIRMWARE
+ * AGROVEDA AI — ESP32-CAM MULTIMODAL AGRI-PROBE FIRMWARE
  * ============================================================================
  * Hardware:
  *  - ESP32-CAM (AI-Thinker Model with OV2640 2MP Camera)
@@ -95,7 +95,7 @@ void handleTelemetry() {
   TempAndHumidity dhtData = dht.getTempAndHumidity();
 
   StaticJsonDocument<200> doc;
-  doc["device_id"] = "AGROPULSE_PROBE_01";
+  doc["device_id"] = "AGROVEDA_PROBE_01";
   doc["soil_moisture"] = soilMoisture;
   doc["temperature"] = isnan(dhtData.temperature) ? 28.5 : dhtData.temperature;
   doc["humidity"] = isnan(dhtData.humidity) ? 65.0 : dhtData.humidity;
@@ -144,7 +144,7 @@ void setup() {
     Serial.print(".");
   }
 
-  Serial.println("\n[AGROPULSE PROBE READY]");
+  Serial.println("\n[AGROVEDA PROBE READY]");
   Serial.print("Probe IP Address: http://");
   Serial.println(WiFi.localIP());
 

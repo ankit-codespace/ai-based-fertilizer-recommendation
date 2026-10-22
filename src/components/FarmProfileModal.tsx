@@ -80,7 +80,7 @@ export const FarmProfileModal: React.FC<FarmProfileModalProps> = ({
               className="w-full bg-slate-50 dark:bg-[#0E0F11] border border-slate-200 dark:border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-neutral-100 placeholder:text-slate-400 dark:placeholder:text-neutral-500 font-medium focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition-all"
             />
             <span className="text-xs text-slate-500 dark:text-neutral-400 mt-1.5 block font-sans">
-              Leave blank to let AgroPulse identify your plant automatically from the photo.
+              Leave blank to let AgroVeda identify your plant automatically from the photo.
             </span>
           </div>
 

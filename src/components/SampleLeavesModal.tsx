@@ -120,7 +120,7 @@ export const SampleLeavesModal: React.FC<SampleLeavesModalProps> = ({
         </div>
 
         <p className="text-xs text-slate-500 dark:text-neutral-400 font-sans">
-          Tap any sample plant to see how AgroPulse detects leaf problems and calculates the right fertilizer recipe.
+          Tap any sample plant to see how AgroVeda detects leaf problems and calculates the right fertilizer recipe.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">

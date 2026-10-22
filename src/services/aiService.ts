@@ -210,8 +210,8 @@ Return ONLY valid JSON matching this schema:
           headers: {
             'Authorization': `Bearer ${openRouterKey}`,
             'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://agropulse.local',
-            'X-Title': 'AgroPulse AI Crop Diagnostic'
+            'HTTP-Referer': 'https://agroveda.local',
+            'X-Title': 'AgroVeda AI Crop Diagnostic'
           },
           body: JSON.stringify({
             model: model,
@@ -621,8 +621,8 @@ Return ONLY a valid JSON object matching schema:
         headers: {
           'Authorization': `Bearer ${openRouterKey}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://agropulse.local',
-          'X-Title': 'AgroPulse AI Crop Diagnostic'
+          'HTTP-Referer': 'https://agroveda.local',
+          'X-Title': 'AgroVeda AI Crop Diagnostic'
         },
         body: JSON.stringify({
           model: 'deepseek/deepseek-v4-flash',

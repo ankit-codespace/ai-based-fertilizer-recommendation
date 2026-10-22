@@ -7,6 +7,7 @@ export interface SoilTelemetry {
   soilPH?: number;         // 0 to 14
   timestamp: string;
   isSimulated?: boolean;
+  isDhtLive?: boolean;
 }
 
 export interface FarmProfile {

@@ -1,4 +1,4 @@
-﻿import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 import { AgronomicPrescription, FarmProfile, SoilTelemetry, VisionAnalysisResult } from '../types';
 
 export function generatePrescriptionPDF(
@@ -24,7 +24,7 @@ export function generatePrescriptionPDF(
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('AGROPULSE AI — CROP HEALTH RX', 14, 15);
+  doc.text('AGROVEDA AI — CROP HEALTH RX', 14, 15);
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
@@ -180,10 +180,10 @@ export function generatePrescriptionPDF(
 
   doc.setFontSize(7);
   doc.setTextColor(grayColor[0], grayColor[1], grayColor[2]);
-  doc.text('AgroPulse AI Edge-to-Cloud Precision Diagnostics • Certified Multimodal Agronomy Engine', 14, 282);
+  doc.text('AgroVeda AI Edge-to-Cloud Precision Diagnostics • Certified Multimodal Agronomy Engine', 14, 282);
   doc.text('Stage 1: Gemini 1.5 Flash Vision | Stage 2: DeepSeek V4 Flash Reasoning', 14, 286);
   doc.text('Digital Signature: VERIFIED-ESP32-EDGE-AI', 150, 286);
 
   // Save the PDF
-  doc.save(`AgroPulse_Prescription_${farm.cropName}_${Date.now()}.pdf`);
+  doc.save(`AgroVeda_Prescription_${farm.cropName}_${Date.now()}.pdf`);
 }

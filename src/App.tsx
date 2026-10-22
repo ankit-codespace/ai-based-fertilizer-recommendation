@@ -29,7 +29,7 @@ export function App() {
     if (typeof window !== 'undefined') {
       const urlTheme = new URLSearchParams(window.location.search).get('theme');
       if (urlTheme === 'dark' || urlTheme === 'light') return urlTheme;
-      return (localStorage.getItem('agropulse_theme') as 'light' | 'dark') || 'light';
+      return (localStorage.getItem('agroveda_theme') as 'light' | 'dark') || (localStorage.getItem('agropulse_theme') as 'light' | 'dark') || 'light';
     }
     return 'light';
   });
@@ -121,28 +121,79 @@ export function App() {
     }
   }, [theme]);
 
-  // Initial Hardware check
+  // Manual Overrides for Microclimate (Scenario Testing)
+  const [manualTemp, setManualTemp] = useState<number | null>(null);
+  const [manualHumidity, setManualHumidity] = useState<number | null>(null);
+  const manualTempRef = useRef<number | null>(null);
+  const manualHumidityRef = useRef<number | null>(null);
+  manualTempRef.current = manualTemp;
+  manualHumidityRef.current = manualHumidity;
+
+  // Initial Hardware check & Polling
   useEffect(() => {
     addLog('System online. Ready for multimodal diagnostics.', 'System', 'success');
 
-    const initHardware = async () => {
+    let isMounted = true;
+    const syncHardware = async () => {
       try {
         const liveTel = await fetchESP32Telemetry(esp32Ip);
-        setTelemetry(liveTel);
+        if (!isMounted) return;
+        setTelemetry(prev => ({
+          ...liveTel,
+          temperatureC: manualTempRef.current ?? liveTel.temperatureC,
+          humidityPercent: manualHumidityRef.current ?? liveTel.humidityPercent
+        }));
         setIsProbeConnected(!liveTel.isSimulated);
-        if (!liveTel.isSimulated) {
-          addLog('ESP32 Soil Probe linked & telemetry stream active.', 'ESP32', 'success');
-        } else {
-          addLog('Simulated environmental telemetry active.', 'ESP32', 'info');
-        }
       } catch {
-        setIsProbeConnected(false);
-        addLog('Hardware probe offline. Simulated environmental telemetry active.', 'ESP32', 'info');
+        if (isMounted) setIsProbeConnected(false);
       }
     };
 
-    initHardware();
+    // Run immediately, then poll every 2.5s for live probe streaming
+    syncHardware();
+    const intervalId = setInterval(syncHardware, 2500);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
   }, [esp32Ip]);
+
+  const handleUpdateTemp = (val: number) => {
+    setManualTemp(val);
+    manualTempRef.current = val;
+    setTelemetry(prev => ({ ...prev, temperatureC: val }));
+  };
+
+  const handleUpdateHumidity = (val: number) => {
+    setManualHumidity(val);
+    manualHumidityRef.current = val;
+    setTelemetry(prev => ({ ...prev, humidityPercent: val }));
+  };
+
+  const handleResetTempOverride = async () => {
+    setManualTemp(null);
+    manualTempRef.current = null;
+    try {
+      const liveTel = await fetchESP32Telemetry(esp32Ip);
+      setTelemetry(prev => ({ ...prev, temperatureC: liveTel.temperatureC }));
+      addLog('Temperature synced to live hardware/ambient stream.', 'System', 'info');
+    } catch {
+      // fallback
+    }
+  };
+
+  const handleResetHumidityOverride = async () => {
+    setManualHumidity(null);
+    manualHumidityRef.current = null;
+    try {
+      const liveTel = await fetchESP32Telemetry(esp32Ip);
+      setTelemetry(prev => ({ ...prev, humidityPercent: liveTel.humidityPercent }));
+      addLog('Humidity synced to live hardware/ambient stream.', 'System', 'info');
+    } catch {
+      // fallback
+    }
+  };
 
   const handleSelectSample = (sample: SampleLeaf) => {
     requestIdRef.current += 1;
@@ -271,7 +322,7 @@ export function App() {
   // Smooth View Transitions Theme Toggle
   const handleThemeSwitch = (targetTheme: 'dark' | 'light') => {
     setTheme(targetTheme);
-    localStorage.setItem('agropulse_theme', targetTheme);
+    localStorage.setItem('agroveda_theme', targetTheme);
     if (targetTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -417,8 +468,13 @@ export function App() {
                 setIsSampleActive(false);
                 setTelemetry(prev => ({ ...prev, moisturePercent: val }));
               }}
-              onUpdateTemp={(val) => setTelemetry(prev => ({ ...prev, temperatureC: val }))}
-              onUpdateHumidity={(val) => setTelemetry(prev => ({ ...prev, humidityPercent: val }))}
+              onUpdateTemp={handleUpdateTemp}
+              onUpdateHumidity={handleUpdateHumidity}
+              isTempOverridden={manualTemp !== null}
+              isHumidityOverridden={manualHumidity !== null}
+              onResetTempOverride={handleResetTempOverride}
+              onResetHumidityOverride={handleResetHumidityOverride}
+              isDhtLive={Boolean(telemetry.isDhtLive)}
               isProbeConnected={isProbeConnected}
               esp32Ip={esp32Ip}
               onEsp32IpChange={setEsp32Ip}
@@ -580,7 +636,7 @@ export function App() {
         <footer className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 mt-4 border-t border-slate-200/80 dark:border-white/[0.08] text-xs text-slate-500 dark:text-neutral-400 select-none">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="font-medium">AgroPulse Edge AI · Agronomic Neural Engine v2.4</span>
+            <span className="font-medium">AgroVeda Edge AI · Agronomic Neural Engine v2.4</span>
             <span className="text-slate-300 dark:text-neutral-600 hidden sm:inline">·</span>
             <span className="font-mono text-[11px] text-slate-400 dark:text-neutral-500 hidden sm:inline">120 FPS View Transitions</span>
           </div>

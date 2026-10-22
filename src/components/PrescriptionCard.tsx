@@ -64,7 +64,7 @@ export const PrescriptionCard: React.FC<PrescriptionCardProps> = ({
 
   const handleCopy = () => {
     if (!prescription) return;
-    const text = `AGROPULSE PLANT CARE PLAN
+    const text = `AGROVEDA PLANT CARE PLAN
 Plant: ${farmProfile.cropName}
 Diagnosis: ${prescription.primaryDiagnosis}
 Action Needed: ${prescription.irrigationDirective.action} - ${prescription.irrigationDirective.details}
@@ -78,13 +78,13 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
   const handleWhatsAppShare = () => {
     if (!prescription) return;
     const text = encodeURIComponent(
-      `🌱 *AgroPulse AI Crop Plan*\n\n` +
+      `🌱 *AgroVeda AI Crop Plan*\n\n` +
       `🌿 *Plant:* ${farmProfile.cropName}\n` +
       `🔍 *Diagnosis:* ${prescription.primaryDiagnosis}\n\n` +
       `💧 *Step 1 (Watering):* ${prescription.irrigationDirective.action} — ${prescription.irrigationDirective.details}\n\n` +
       `🧪 *Step 2 (Plant Food):*\n` +
       prescription.chemicalPrescription.map(c => `• ${c.name} (${c.ratioNPK}): ${c.exactDosage}`).join('\n') +
-      `\n\nGenerated with AgroPulse AI`
+      `\n\nGenerated with AgroVeda AI`
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
@@ -107,15 +107,15 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700 dark:text-emerald-400">
-                  Multimodal Analysis
+                  Plant Diagnosis
                 </span>
                 <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-neutral-600" />
                 <span className="text-[11px] text-slate-500 dark:text-neutral-400">
-                  Connecting Foliar Tissue & Ground Telemetry
+                  Matching leaf photo with soil data
                 </span>
               </div>
               <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-neutral-100 tracking-tight mt-0.5">
-                Formulating Custom Crop Care Plan
+                Creating Your Plant Care Plan
               </h3>
             </div>
           </div>
@@ -395,7 +395,7 @@ Organic: ${prescription.organicPrescription.map(p => `${p.name}: ${p.exactDosage
             Your Custom <span className="font-serif italic font-normal text-emerald-600 dark:text-emerald-400">Plant Care Plan</span>
           </h3>
           <p className="text-xs sm:text-[15px] text-slate-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
-            AgroPulse fuses your leaf photo with live soil moisture telemetry to formulate the exact watering directive, NPK fertilizer dosage, and recovery schedule.
+            AgroVeda combines your leaf photo with live soil moisture to calculate the exact watering, fertilizer amounts, and recovery schedule for your plant.
           </p>
         </div>
 
